@@ -1,10 +1,11 @@
 #!name = 懂球帝去广告
-#!desc = 懂球帝去广告：规则层拦截广告服务器（广告聚合平台/备用广告服务器/穿山甲SDK/京东广告链路），脚本层清理评论区(role=ad_dplus 广告位)和详情页(dqd_ads 广告位)
+#!desc = [v1.0.0] 懂球帝去广告：规则层拦截广告服务器（广告聚合平台/备用广告服务器/穿山甲SDK/京东广告链路），脚本层清理评论区(role=ad_dplus 广告位)、详情页(dqd_ads 广告位)和信息流列表(广告文章)
 #!author = dranklim
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/plugins/icon.png
 #!system = iOS,iPadOS,tvOS
 #!loon_version = 3.2.5
+#!version = 1.0.0
 #!tag = 去广告,懂球帝
 #!type = normal
 
