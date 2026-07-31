@@ -51,8 +51,10 @@ if (!body) {
           obj.data.account.show_ad = 0;
         }
       }
-    } else if (url.indexOf("getlists") !== -1) {
-      // ===== 信息流列表：过滤 is_business_ad=1 的广告文章（如剑南春）=====
+    } else if (url.indexOf("getlists") !== -1 || url.indexOf("channel/feeds") !== -1 || url.indexOf("data/index") !== -1) {
+      // ===== 信息流列表（getlists / channel/feeds / data/index）：过滤广告文章 =====
+      // 广告标记: is_business_ad=1（商业广告）、is_brand=1（品牌内容）
+      // 注意字段值可能是字符串("1")或数字(1)，用 Number() 统一判断
       const lists = [];
       if (obj && Array.isArray(obj.articles)) lists.push(obj.articles);
       if (obj && obj.data && Array.isArray(obj.data.articles)) {
@@ -61,7 +63,10 @@ if (!body) {
       for (const list of lists) {
         for (let i = list.length - 1; i >= 0; i--) {
           const a = list[i];
-          if (a && Number(a.is_business_ad) === 1) {
+          if (
+            a &&
+            (Number(a.is_business_ad) === 1 || Number(a.is_brand) === 1)
+          ) {
             list.splice(i, 1);
           }
         }
