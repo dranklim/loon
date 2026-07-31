@@ -9,12 +9,25 @@
 #!type = normal
 
 [Rule]
-# 懂球帝广告服务器（track 追踪 / imp 曝光 / click 点击）
+# ===== 懂球帝广告服务器 =====
+# 广告聚合平台（mediation 广告位配置 + 事件上报）—— 新抓包 363_1785520532736.har 发现
+DOMAIN-SUFFIX,adprolink.xwpbj.com,REJECT
+# 懂球帝广告服务器（track 追踪 / imp 曝光 / click 点击）—— 首轮抓包发现，已被拦截
 DOMAIN-SUFFIX,dab.dongdianqiu.com,REJECT
-# 京东广告 SDK 日志上报
+# ===== 京东广告 SDK / H5 广告落地页链路 =====
+# 京东联盟广告日志上报
 DOMAIN-SUFFIX,uranus.jd.com,REJECT
 # 京东引流广告 API（appid=yinliu）
 URL-REGEX,^https?:\/\/api\.m\.jd\.com\/\?appid=yinliu,REJECT
+# 京东广告落地页：风控跳转 / 店铺页 / H5 性能监控 / 静态资源 / token 验证
+DOMAIN-SUFFIX,cfe.m.jd.com,REJECT
+DOMAIN-SUFFIX,shop.m.jd.com,REJECT
+DOMAIN-SUFFIX,h5speed.m.jd.com,REJECT
+DOMAIN-SUFFIX,sgm-static.jd.com,REJECT
+DOMAIN-SUFFIX,verifytoken.jingdong.com,REJECT
+DOMAIN-SUFFIX,verifytoken.jddj.com,REJECT
+DOMAIN-SUFFIX,verifytoken.jingdonghealth.cn,REJECT
+DOMAIN-SUFFIX,verifytoken.jddaojia.shop,REJECT
 
 [Script]
 http-response ^https?:\/\/(api\.dongdianqiu\.com\/v2\/article\/\d+\/comment|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+) script-path=https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad
