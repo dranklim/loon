@@ -33,4 +33,4 @@ DOMAIN-SUFFIX,verifytoken.jingdonghealth.cn,REJECT
 DOMAIN-SUFFIX,verifytoken.jddaojia.shop,REJECT
 
 [Script]
-http-response ^https?:\/\/(api\.dongdianqiu\.com\/v2\/article\/\d+\/comment|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+) script-path=https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad
+http-response ^https?:\/\/(api\.dongdianqiu\.com\/(v2\/article\/\d+\/comment|v3\/archive\/app\/tabs\/getlists)|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+) script-path=https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad

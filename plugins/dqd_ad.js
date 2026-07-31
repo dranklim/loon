@@ -6,12 +6,14 @@
  *      data.user_list 中存在 role="ad_dplus" 的广告位（伪装成热评用户）
  *   2. 详情接口 detail.dongdianqiu.com/v2/article/detail/{id}
  *      data.dqd_ads 广告位字段 + not_show_m_ad（允许广告开关）
+ *   3. 信息流列表接口 api.dongdianqiu.com/v3/archive/app/tabs/getlists
+ *      articles 中存在 is_business_ad=1 的广告文章（如剑南春），过滤后框体消失
  *
- * 处理: 按 URL 分发 —— 评论接口过滤 ad_dplus 广告位；详情接口清空广告位。
+ * 处理: 按 URL 分发 —— 评论过滤 ad_dplus；详情清空广告位；列表过滤广告文章。
  *
  * Loon 配置:
  *   [Script]
- *   http-response ^https?:\/\/(api\.dongdianqiu\.com\/v2\/article\/\d+\/comment|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+) script-path=dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad
+ *   http-response ^https?:\/\/(api\.dongdianqiu\.com\/(v2\/article\/\d+\/comment|v3\/archive\/app\/tabs\/getlists)|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+) script-path=https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad
  */
 
 let url = $request.url;
@@ -47,6 +49,21 @@ if (!body) {
           typeof obj.data.account.show_ad !== "undefined"
         ) {
           obj.data.account.show_ad = 0;
+        }
+      }
+    } else if (url.indexOf("getlists") !== -1) {
+      // ===== 信息流列表：过滤 is_business_ad=1 的广告文章（如剑南春）=====
+      const lists = [];
+      if (obj && Array.isArray(obj.articles)) lists.push(obj.articles);
+      if (obj && obj.data && Array.isArray(obj.data.articles)) {
+        lists.push(obj.data.articles);
+      }
+      for (const list of lists) {
+        for (let i = list.length - 1; i >= 0; i--) {
+          const a = list[i];
+          if (a && Number(a.is_business_ad) === 1) {
+            list.splice(i, 1);
+          }
         }
       }
     }
