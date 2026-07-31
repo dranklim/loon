@@ -19,9 +19,7 @@ DOMAIN-SUFFIX,dab.dongdianqiu.com,REJECT
 DOMAIN-SUFFIX,uranus.jd.com,REJECT
 # 京东引流广告 API（appid=yinliu）
 URL-REGEX,^https?:\/\/api\.m\.jd\.com\/\?appid=yinliu,REJECT
-# 京东广告落地页：风控跳转 / 店铺页 / H5 性能监控 / 静态资源 / token 验证
-DOMAIN-SUFFIX,cfe.m.jd.com,REJECT
-DOMAIN-SUFFIX,shop.m.jd.com,REJECT
+# 京东广告落地页：H5 性能监控 / 静态资源 / token 验证（cfe.m.jd.com、shop.m.jd.com 不拦，京东 App 使用）
 DOMAIN-SUFFIX,h5speed.m.jd.com,REJECT
 DOMAIN-SUFFIX,sgm-static.jd.com,REJECT
 DOMAIN-SUFFIX,verifytoken.jingdong.com,REJECT
