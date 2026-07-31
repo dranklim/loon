@@ -10,9 +10,14 @@
 
 [Rule]
 # ===== 懂球帝广告服务器 =====
-# 广告聚合平台（mediation 广告位配置 + 事件上报）—— 新抓包 363_1785520532736.har 发现
+# 广告聚合平台（mediation 广告位配置 + 事件上报）—— 抓包 363 发现
 DOMAIN-SUFFIX,adprolink.xwpbj.com,REJECT
-# 懂球帝广告服务器（track 追踪 / imp 曝光 / click 点击）—— 首轮抓包发现，已被拦截
+# 备用广告服务器（adconfig back_hosts 配置，adprolink 失败时回退）
+DOMAIN-SUFFIX,hcz-static.pingan.com.cn,REJECT
+DOMAIN-SUFFIX,q.0396e.cn,REJECT
+# 穿山甲广告 SDK 域名发现接口（get_domains）
+DOMAIN-SUFFIX,tnc3-alisc1.zijieapi.com,REJECT
+# 懂球帝广告服务器（track 追踪 / imp 曝光 / click 点击）—— 首轮抓包发现
 DOMAIN-SUFFIX,dab.dongdianqiu.com,REJECT
 # ===== 京东广告 SDK / H5 广告落地页链路 =====
 # 京东联盟广告日志上报
