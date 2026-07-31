@@ -1,11 +1,11 @@
 #!name = 懂球帝去广告
-#!desc = [v1.1.0] 懂球帝去广告：规则层拦截广告服务器（自营广告平台/广告图CDN/广告聚合/穿山甲/京东广告链路），脚本层清理评论区(role=ad_dplus)、详情页(dqd_ads/ad_content)和信息流列表(广告文章)
+#!desc = [v1.1.1] 懂球帝去广告：规则层拦截广告服务器（自营广告平台/广告图CDN/广告聚合/穿山甲/京东广告链路），脚本层清理评论区(role=ad_dplus)、详情页(dqd_ads/ad_content)和信息流列表(广告文章)
 #!author = dranklim
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/plugins/icon.png
 #!system = iOS,iPadOS,tvOS
 #!loon_version = 3.2.5
-#!version = 1.1.0
+#!version = 1.1.1
 #!tag = 去广告,懂球帝
 #!type = normal
 
@@ -40,3 +40,6 @@ DOMAIN-SUFFIX,verifytoken.jddaojia.shop,REJECT
 
 [Script]
 http-response ^https?:\/\/(api\.dongdianqiu\.com\/(v2\/article\/\d+\/comment|v3\/archive\/app\/(tabs\/getlists|channel\/feeds)|data\/index)|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+|ap\.dongdianqiu\.com\/plat\/v\d+) script-path=https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad
+
+[Mitm]
+hostname = *.dongdianqiu.com
