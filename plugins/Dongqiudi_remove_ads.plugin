@@ -1,16 +1,21 @@
 #!name = 懂球帝去广告
-#!desc = [v1.0.0] 懂球帝去广告：规则层拦截广告服务器（广告聚合平台/备用广告服务器/穿山甲SDK/京东广告链路），脚本层清理评论区(role=ad_dplus 广告位)、详情页(dqd_ads 广告位)和信息流列表(广告文章)
+#!desc = [v1.1.0] 懂球帝去广告：规则层拦截广告服务器（自营广告平台/广告图CDN/广告聚合/穿山甲/京东广告链路），脚本层清理评论区(role=ad_dplus)、详情页(dqd_ads/ad_content)和信息流列表(广告文章)
 #!author = dranklim
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/plugins/icon.png
 #!system = iOS,iPadOS,tvOS
 #!loon_version = 3.2.5
-#!version = 1.0.0
+#!version = 1.1.0
 #!tag = 去广告,懂球帝
 #!type = normal
 
 [Rule]
-# ===== 懂球帝广告服务器 =====
+# ===== 懂球帝自营广告（核心！剑南春广告走这里）=====
+# 自营广告平台接口（plat/v3、plat/v4：开屏 app_loading + 信息流 big_picture_txt + banner）
+URL-REGEX,^https?:\/\/ap\.dongdianqiu\.com\/plat\/v\d+,REJECT
+# 广告图片 CDN（广告素材图）
+DOMAIN-SUFFIX,apimg.dongdianqiu.com,REJECT
+# ===== 第三方广告聚合平台 =====
 # 广告聚合平台（mediation 广告位配置 + 事件上报）
 DOMAIN-SUFFIX,adprolink.xwpbj.com,REJECT
 # 备用广告服务器（adprolink 失败时回退）
@@ -34,4 +39,4 @@ DOMAIN-SUFFIX,verifytoken.jingdonghealth.cn,REJECT
 DOMAIN-SUFFIX,verifytoken.jddaojia.shop,REJECT
 
 [Script]
-http-response ^https?:\/\/(api\.dongdianqiu\.com\/(v2\/article\/\d+\/comment|v3\/archive\/app\/(tabs\/getlists|channel\/feeds)|data\/index)|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+) script-path=https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad
+http-response ^https?:\/\/(api\.dongdianqiu\.com\/(v2\/article\/\d+\/comment|v3\/archive\/app\/(tabs\/getlists|channel\/feeds)|data\/index)|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+|ap\.dongdianqiu\.com\/plat\/v\d+) script-path=https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad

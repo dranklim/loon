@@ -44,12 +44,25 @@ if (!body) {
       if (obj && obj.data) {
         obj.data.dqd_ads = [];
         obj.data.not_show_m_ad = 1;
+        if (Array.isArray(obj.data.ad_content)) {
+          obj.data.ad_content = [];
+        }
+        if (obj.data.column && typeof obj.data.column.show_ad !== "undefined") {
+          obj.data.column.show_ad = 0;
+        }
         if (
           obj.data.account &&
           typeof obj.data.account.show_ad !== "undefined"
         ) {
           obj.data.account.show_ad = 0;
         }
+      }
+    } else if (url.indexOf("/plat/v") !== -1) {
+      // ===== 自营广告平台接口（plat/v3、plat/v4）：清空全部广告位配置 =====
+      // 开屏 app_loading / 信息流 big_picture_txt / banner 都从这里下发
+      if (obj) {
+        if (Array.isArray(obj.sdk)) obj.sdk = [];
+        if (Array.isArray(obj.addata)) obj.addata = [];
       }
     } else if (url.indexOf("getlists") !== -1 || url.indexOf("channel/feeds") !== -1 || url.indexOf("data/index") !== -1) {
       // ===== 信息流列表（getlists / channel/feeds / data/index）：过滤广告文章 =====
