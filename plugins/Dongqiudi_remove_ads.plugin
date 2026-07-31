@@ -5,7 +5,7 @@
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/plugins/icon.png
 #!system = iOS,iPadOS,tvOS
 #!loon_version = 3.2.5
-#!tag = 去广告,懂球帝,抓包
+#!tag = 去广告,懂球帝
 #!type = normal
 
 [Rule]
