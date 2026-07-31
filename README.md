@@ -1,6 +1,6 @@
 # 懂球帝去广告 (Dongqiudi AdBlock)
 
-基于**真实抓包分析**（360_1785518464491.har，961 请求）的懂球帝去广告 Loon 插件。
+懂球帝去广告 Loon 插件：规则层拦截广告服务器，脚本层清理数据层广告位。
 
 ## 功能
 
@@ -30,10 +30,6 @@ loon://import?plugin=https://raw.githubusercontent.com/dranklim/loon/main/plugin
 ## 要求
 - Loon 3.2.5 (789)+（规则层脚本依赖）
 - 需启用 MitM（[Script] 处理 HTTPS 响应需要）
-
-## 抓包分析摘要
-- 961 个请求，识别 4 个广告源：dab 广告服务器、评论热评广告位、详情页广告位、京东广告 SDK
-- `cc.xiaohongdan.com`（竞猜活动）和 `img.aisportsapp.com`（内容图）经核实**非广告**，未拦截
 
 ## License
 MIT

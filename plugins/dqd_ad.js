@@ -1,12 +1,11 @@
 /**
- * 懂球帝 去广告脚本（合并版 dqd_ad.js）
+ * 懂球帝 去广告脚本（dqd_ad.js）
  *
- * 抓包分析（360_1785518464491.har）:
+ * 处理逻辑:
  *   1. 评论接口 api.dongdianqiu.com/v2/article/{id}/comment
- *      data.user_list 中存在 role="ad_dplus" 的广告位（如"懂球帝热评小助手"，
- *      scheme 跳转 dongqiudi://v1/vipCenter/home/vip_comment_ad）
+ *      data.user_list 中存在 role="ad_dplus" 的广告位（伪装成热评用户）
  *   2. 详情接口 detail.dongdianqiu.com/v2/article/detail/{id}
- *      data.dqd_ads 广告位字段 + not_show_m_ad=0（允许广告）
+ *      data.dqd_ads 广告位字段 + not_show_m_ad（允许广告开关）
  *
  * 处理: 按 URL 分发 —— 评论接口过滤 ad_dplus 广告位；详情接口清空广告位。
  *
