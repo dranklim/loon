@@ -15,17 +15,11 @@
 - 🇨🇳 **分流**：国内规则全覆盖（ChinaMax/ChinaIPs/ChinaASN + 20+ 应用级直连）；国外按应用分流
 - 🚫 **去广告**：完整插件体系（B 站 / 京东 / 淘宝 / 微信小程序 / YouTube 等）
 
-### 一键导入（Loon 内打开链接）
+### 一键导入（iOS 上直接点击即可）
 
-**raw 链接（需代理）：**
-```
-loon://import?url=https://raw.githubusercontent.com/dranklim/loon/main/config/Loon_Advanced.conf
-```
+[⬇️ 一键导入配置 · raw 链接（需代理）](loon://import?url=https://raw.githubusercontent.com/dranklim/loon/main/config/Loon_Advanced.conf)
 
-**jsdelivr 镜像（国内直连，无需代理）：**
-```
-loon://import?url=https://gcore.jsdelivr.net/gh/dranklim/loon@main/config/Loon_Advanced.conf
-```
+[⬇️ 一键导入配置 · jsdelivr 镜像（国内直连）](loon://import?url=https://gcore.jsdelivr.net/gh/dranklim/loon@main/config/Loon_Advanced.conf)
 
 ### 导入后必做
 1. **MitM 证书**：设置 → MitM → 生成证书 → 安装描述文件 → 设置中信任（配置已移除私钥，必须重新生成）
@@ -40,11 +34,9 @@ loon://import?url=https://gcore.jsdelivr.net/gh/dranklim/loon@main/config/Loon_A
 
 规则层拦截广告服务器（dab.dongdianqiu.com / uranus.jd.com 等）+ 脚本层清理数据广告位（热评伪装广告 / 详情页广告位）。
 
-### 一键导入（Loon 内打开链接）
+### 一键导入（iOS 上直接点击即可）
 
-```
-loon://import?plugin=https://raw.githubusercontent.com/dranklim/loon/main/plugins/Dongqiudi_remove_ads.plugin
-```
+[⬇️ 一键导入懂球帝去广告插件](loon://import?plugin=https://raw.githubusercontent.com/dranklim/loon/main/plugins/Dongqiudi_remove_ads.plugin)
 
 ### 要求
 - Loon 3.2.5 (789)+
