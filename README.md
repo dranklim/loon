@@ -17,9 +17,9 @@
 
 ### 一键导入（iOS 上直接点击即可）
 
-[⬇️ 一键导入配置 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?url=https://raw.githubusercontent.com/dranklim/loon/main/config/Loon_Advanced.conf)
+[⬇️ 一键导入配置 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fconfig%2FLoon_Advanced.conf)
 
-[⬇️ 一键导入配置 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?url=https://gcore.jsdelivr.net/gh/dranklim/loon@main/config/Loon_Advanced.conf)
+[⬇️ 一键导入配置 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fgcore.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fconfig%2FLoon_Advanced.conf)
 
 ### 导入后必做
 1. **MitM 证书**：设置 → MitM → 生成证书 → 安装描述文件 → 设置中信任（配置已移除私钥，必须重新生成）
