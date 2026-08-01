@@ -17,9 +17,9 @@
 
 ### 一键导入（iOS 上直接点击即可）
 
-[⬇️ 一键导入配置 · raw 链接（需代理）](loon://import?url=https://raw.githubusercontent.com/dranklim/loon/main/config/Loon_Advanced.conf)
+[⬇️ 一键导入配置 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?url=https://raw.githubusercontent.com/dranklim/loon/main/config/Loon_Advanced.conf)
 
-[⬇️ 一键导入配置 · jsdelivr 镜像（国内直连）](loon://import?url=https://gcore.jsdelivr.net/gh/dranklim/loon@main/config/Loon_Advanced.conf)
+[⬇️ 一键导入配置 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?url=https://gcore.jsdelivr.net/gh/dranklim/loon@main/config/Loon_Advanced.conf)
 
 ### 导入后必做
 1. **MitM 证书**：设置 → MitM → 生成证书 → 安装描述文件 → 设置中信任（配置已移除私钥，必须重新生成）
@@ -36,7 +36,7 @@
 
 ### 一键导入（iOS 上直接点击即可）
 
-[⬇️ 一键导入懂球帝去广告插件](loon://import?plugin=https://raw.githubusercontent.com/dranklim/loon/main/plugins/Dongqiudi_remove_ads.plugin)
+[⬇️ 一键导入懂球帝去广告插件](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/dranklim/loon/main/plugins/Dongqiudi_remove_ads.plugin)
 
 ### 要求
 - Loon 3.2.5 (789)+
