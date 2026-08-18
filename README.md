@@ -44,5 +44,19 @@
 
 ---
 
+## 📁 规则订阅（rules/）
+
+### civitai.list — civitai.red 分流 + 去广告
+
+基于 civitai.red 站点 JS 逆向 + 实测验证（2026-08-18）：Snigel AdNgin 广告引擎（cdn.snigelweb.com）、Google Ad Manager/DoubleClick、AnyClip 视频广告、GTM/GA 埋点整域 REJECT；civitai.red / civitai.com / image.civitai.com 等走 PROXY。
+
+### 一键导入（iOS 上直接点击即可）
+
+[⬇️ 一键导入 civitai 规则订阅 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Frules%2Fcivitai.list)
+
+[⬇️ 一键导入 civitai 规则订阅 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fgcore.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Frules%2Fcivitai.list)
+
+---
+
 ## License
 MIT
