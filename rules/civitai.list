@@ -1,24 +1,8 @@
-# civitai.red 分流 + 去广告规则
+# civitai.red 分流规则
 # 来源：civitai.red 首页 + 75 JS chunks 逆向 + 实测验证（2026-08-18）
 # 适用：Loon [Rule] 规则订阅（导入 → 规则类型选择"远程规则"）
-# 顺序说明：REJECT 去广告在前，PROXY 分流在后（规则自上而下匹配）
-
-# ============ 去广告（REJECT）============
-# Snigel AdNgin 广告引擎（核心，实测 cdn.snigelweb.com/adengine/civitai.com/loader.js 200）
-DOMAIN-SUFFIX,snigelweb.com,REJECT
-# Google Ad Manager / GPT 竞价与曝光
-DOMAIN-SUFFIX,doubleclick.net,REJECT
-# Google Tag Manager / GA 埋点
-DOMAIN-SUFFIX,googletagmanager.com,REJECT
-DOMAIN-SUFFIX,google-analytics.com,REJECT
-# AnyClip outstream 视频广告
-DOMAIN-SUFFIX,anyclip.com,REJECT
-# AdSense（站点已暂停，备用拦截）
-DOMAIN-SUFFIX,googlesyndication.com,REJECT
-DOMAIN-SUFFIX,adsbygoogle.com,REJECT
-# Civitai 自营广告曝光打点（保留 API，仅拦曝光上报）
-URL-REGEX,^https?:\/\/civitai\.red\/api\/v1\/view,REJECT
-URL-REGEX,^https?:\/\/civitai\.com\/api\/v1\/view,REJECT
+# 说明：civitai.red 是 civitai.com 的 Next.js 复刻站，API 同域，图片走官方 CDN
+# 去广告请另导 civitai_ads.list
 
 # ============ civitai 分流（PROXY）============
 DOMAIN-SUFFIX,civitai.red,PROXY
