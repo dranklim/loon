@@ -1,27 +1,20 @@
-# civitai.red 去广告规则
-# 来源：civitai.red 首页 + 75 JS chunks 逆向 + 实测验证（2026-08-18）
-# 适用：Loon [Rule] 规则订阅（导入 → 规则类型选择"远程规则"）
-# 广告栈：Snigel AdNgin（主引擎）+ Google Ad Manager/GPT + AnyClip 视频 + GTM/GA 埋点 + 自营曝光打点
+# civitai.red 去广告规则（Loon 远程规则订阅）
+# ⚠️ 注意：远程规则订阅的策略在导入时/引用行 policy= 指定，本文件不写策略列
+# 引用示例：
+#   [Remote Rule]
+#   https://raw.githubusercontent.com/dranklim/loon/main/rules/civitai_ads.list, policy=REJECT, tag=civitai_ads, enabled=true
+# 或推荐直接用插件：plugins/Civitai_remove_ads.plugin（策略内置，一键生效）
 
-# ============ 主广告引擎 ============
-# Snigel AdNgin（实测 cdn.snigelweb.com/adengine/civitai.com/loader.js HTTP 200）
-DOMAIN-SUFFIX,snigelweb.com,REJECT
-
-# ============ Google 广告与埋点 ============
-# Google Ad Manager / GPT 竞价与曝光
-DOMAIN-SUFFIX,doubleclick.net,REJECT
-# Google Tag Manager / GA 埋点
-DOMAIN-SUFFIX,googletagmanager.com,REJECT
-DOMAIN-SUFFIX,google-analytics.com,REJECT
-# AdSense（站点已暂停，备用拦截）
-DOMAIN-SUFFIX,googlesyndication.com,REJECT
-DOMAIN-SUFFIX,adsbygoogle.com,REJECT
-
-# ============ 视频广告 ============
-# AnyClip outstream 视频广告（CNAME t.sni.global.fastly.net）
-DOMAIN-SUFFIX,anyclip.com,REJECT
-
-# ============ 自营广告曝光打点 ============
-# Civitai 自营广告曝光上报（保留 API 功能，仅拦打点路径）
-URL-REGEX,^https?:\/\/civitai\.red\/api\/v1\/view,REJECT
-URL-REGEX,^https?:\/\/civitai\.com\/api\/v1\/view,REJECT
+# ===== Snigel AdNgin 主广告引擎（核心，实测 cdn.snigelweb.com/adengine/civitai.com/loader.js 200）=====
+DOMAIN-SUFFIX,snigelweb.com
+# ===== Google 广告与埋点 =====
+DOMAIN-SUFFIX,doubleclick.net
+DOMAIN-SUFFIX,googletagmanager.com
+DOMAIN-SUFFIX,google-analytics.com
+DOMAIN-SUFFIX,googlesyndication.com
+DOMAIN-SUFFIX,adsbygoogle.com
+# ===== AnyClip outstream 视频广告 =====
+DOMAIN-SUFFIX,anyclip.com
+# ===== Civitai 自营广告曝光打点 =====
+URL-REGEX,^https?:\/\/civitai\.red\/api\/v1\/view
+URL-REGEX,^https?:\/\/civitai\.com\/api\/v1\/view

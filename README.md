@@ -52,7 +52,11 @@
 
 ### civitai_ads.list — civitai.red 去广告
 
-基于同一逆向：Snigel AdNgin 广告引擎（cdn.snigelweb.com）、Google Ad Manager/DoubleClick、AnyClip 视频广告、GTM/GA 埋点整域 REJECT；自营广告曝光打点（/api/v1/view）URL-REGEX 拦截。
+基于同一逆向：Snigel AdNgin 广告引擎（cdn.snigelweb.com）、Google Ad Manager/DoubleClick、AnyClip 视频广告、GTM/GA 埋点整域拦截；自营广告曝光打点（/api/v1/view）URL-REGEX 拦截。
+
+> ⚠️ **远程规则订阅的策略在导入时选择，文件内不写策略**。若用 `?rules=` 导入，导入时策略必须选 **REJECT**；或直接引用：`https://raw.githubusercontent.com/dranklim/loon/main/rules/civitai_ads.list, policy=REJECT, tag=civitai_ads, enabled=true`
+>
+> ✅ **推荐用插件版**（plugins/Civitai_remove_ads.plugin），REJECT 内置，一键导入即生效，无需选策略。
 
 ### 一键导入（iOS 上直接点击即可）
 
@@ -63,6 +67,14 @@
 [⬇️ 一键导入 civitai 去广告规则 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Frules%2Fcivitai_ads.list)
 
 [⬇️ 一键导入 civitai 去广告规则 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Frules%2Fcivitai_ads.list)
+
+### Civitai_remove_ads.plugin — civitai.red 去广告插件（推荐）
+
+REJECT 策略内置，一键导入即生效，无需手动选策略。
+
+[⬇️ 一键导入去广告插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FCivitai_remove_ads.plugin)
+
+[⬇️ 一键导入去广告插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FCivitai_remove_ads.plugin)
 
 ---
 
