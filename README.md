@@ -76,6 +76,14 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 [⬇️ 一键导入去广告插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FCivitai_remove_ads.plugin)
 
+### SkipProxy_anti_detect.plugin — 银行/运营商 App 防 VPN 检测（推荐）
+
+解决银行 App 弹"网络环境存在安全风险"（农业银行实测有效）。核心：REJECT 农行 msmp 风控上报端点（App 检测到 TUN 会向 msmp.abchina.com.cn 上报，切断上报通道即不弹）+ skip-proxy/real-ip 直连白名单（建行/邮储/电信一键登录/交管12123 等）。源自 mieqq/skip-proxy-lists.sgmodule 改写。
+
+[⬇️ 一键导入防检测插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FSkipProxy_anti_detect.plugin)
+
+[⬇️ 一键导入防检测插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FSkipProxy_anti_detect.plugin)
+
 ---
 
 ## License

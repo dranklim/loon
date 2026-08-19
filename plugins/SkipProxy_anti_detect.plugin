@@ -1,0 +1,33 @@
+#!name = SkipProxy防检测
+#!desc = 跳过部分应用的代理检测（银行/运营商 App 防 VPN 弹窗）。核心：REJECT 农行 msmp 风控上报端点 + skip-proxy/real-ip 直连名单。源自 mieqq/skip-proxy-lists.sgmodule，改写为 Loon 插件
+#!author = dranklim
+#!homepage = https://github.com/dranklim/loon
+#!system = iOS,iPadOS,tvOS
+#!loon_version = 3.2.5
+#!tag = 防检测,银行,直连
+#!type = normal
+
+[Rule]
+# ===== 农行风控上报端点（核心，实测解决"网络环境存在安全风险"弹窗）=====
+# msmp = 农行移动安全管理平台。App 检测到 TUN/VPN 会向它上报，服务器回风险弹窗。
+# REJECT 后上报失败 → 服务器收不到风险信号 → 不弹窗
+DOMAIN,msmp.abchina.com.cn,REJECT
+
+[General]
+# 以下域名跳过代理直连（银行/运营商 App 检测代理时白名单）
+skip-proxy = www.baidu.com,yunbusiness.ccb.com,wxh.wo.cn,gate.lagou.com,www.abchina.com.cn,www.shanbay.com,login-service.mobile-bank.psbc.com,mobile-bank.psbc.com,id6.me,www.163.com
+# 以下域名始终返回真实 IP（不参与 Fake IP，防 App 检测到 198.18.x.x 保留段）
+real-ip = easy-login.10099.com.cn,*-update.xoyocdn.com,id6.me,open.e.189.cn
+
+# ===== 域名注释 =====
+# www.baidu.com：网上国网、多看阅读、顺丰金融、广东农信、丰云行、中国银行缤纷生活、通信行程卡、趣智校园、光大手机银行、掌上12333、沃视频
+# yunbusiness.ccb.com 建行生活
+# wxh.wo.cn 沃小号
+# gate.lagou.com 拉勾招聘
+# www.abchina.com.cn 中国农业银行
+# www.shanbay.com 扇贝单词消息中心
+# login-service.mobile-bank.psbc.com / mobile-bank.psbc.com 中国邮政储蓄银行
+# easy-login.10099.com.cn 中国广电
+# id6.me 中国电信一键登录
+# www.163.com 交管12123
+# *-update.xoyocdn.com 剑网三无界
