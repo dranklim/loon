@@ -18,6 +18,14 @@ DOMAIN,msmp.abchina.com.cn,REJECT
 # （含 VPN/utun 检测结果），Basic Auth + 加密 body。REJECT 后上报失败 → 服务器不判风险
 IP-CIDR,45.65.23.16/32,REJECT
 
+# ===== 平安口袋银行核心风控上报端点（IBP-SMP 安全平台，2026-08-19 二次抓包实锤）=====
+# appmonlife = App 启动第一个请求（00:06:17.666），config 请求体含 nsi 网络状态上报
+# （nt/dsi/dip 字段，TUN 接管后网关异常 → 服务器判 VPN）。服务器返回探针地址 pa + Net 检测开关
+# REJECT 后 config 请求失败 → 服务器收不到网络状态 → 不判"您正在使用VPN"
+DOMAIN,appmonlife.pingan.com.cn,REJECT
+# 备用上报：logcloud-agent（服务器下发的日志云上报端点）
+DOMAIN,logcloud-agent.pingan.com.cn,REJECT
+
 # ===== 平安银行系全直连（防走代理导致出口 IP 境外）=====
 DOMAIN-SUFFIX,pingan.com.cn,DIRECT
 DOMAIN-SUFFIX,sdb.com.cn,DIRECT
