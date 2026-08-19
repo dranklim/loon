@@ -26,14 +26,6 @@ DOMAIN-SUFFIX,jk.cn,DIRECT
 DOMAIN-SUFFIX,1qianbao.com,DIRECT
 DOMAIN-SUFFIX,yqbimg.net,DIRECT
 
-# ===== 平安口袋银行其余上报通道拦截（实验A：验证是否服务端多端点判定）=====
-# rsb2 catMonitor 设备上报（含本地IP/设备画像）→ 断
-URL-REGEX,^https://rsb2\.pingan\.com\.cn/brop/stp/kafka/,REJECT
-# maam 行为上报（34次/会话）→ 断
-URL-REGEX,^https://maam\.pingan\.com\.cn/ubd/,REJECT
-# padn 设备 SDK（加密上报）→ 断
-DOMAIN,padn-access.pingan.com.cn,REJECT
-
 [General]
 # 以下域名跳过代理直连（银行/运营商 App 检测代理时白名单）
 skip-proxy = www.baidu.com,yunbusiness.ccb.com,wxh.wo.cn,gate.lagou.com,www.abchina.com.cn,www.shanbay.com,login-service.mobile-bank.psbc.com,mobile-bank.psbc.com,id6.me,www.163.com,pingan.com.cn,sdb.com.cn,orangebank.com.cn
