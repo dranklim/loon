@@ -1,5 +1,5 @@
 #!name = SkipProxy防检测
-#!desc = 跳过部分应用的代理检测（银行/运营商 App 防 VPN 弹窗）。核心：REJECT 农行 msmp 风控上报端点 + skip-proxy/real-ip 直连名单。源自 mieqq/skip-proxy-lists.sgmodule，改写为 Loon 插件
+#!desc = 跳过部分应用的代理检测（银行/运营商 App 防 VPN 弹窗）。核心：REJECT 风控上报端点（农行 msmp + 平安口袋银行 IP 通道）+ skip-proxy/real-ip 直连名单。源自 mieqq/skip-proxy-lists.sgmodule，扩展平安口袋银行抓包分析（2026-08）
 #!author = dranklim
 #!homepage = https://github.com/dranklim/loon
 #!system = iOS,iPadOS,tvOS
@@ -8,16 +8,29 @@
 #!type = normal
 
 [Rule]
-# ===== 农行风控上报端点（核心，实测解决"网络环境存在安全风险"弹窗）=====
+# ===== 农行风控上报端点（实测解决"网络环境存在安全风险"弹窗）=====
 # msmp = 农行移动安全管理平台。App 检测到 TUN/VPN 会向它上报，服务器回风险弹窗。
 # REJECT 后上报失败 → 服务器收不到风险信号 → 不弹窗
 DOMAIN,msmp.abchina.com.cn,REJECT
 
+# ===== 平安口袋银行风控上报通道（IP 直连，绕域名规则，2026-08-19 抓包实锤）=====
+# 45.65.23.16:8443/v3/report = 平安自有 AS23848 PINGANCOM（深圳），App 启动 5ms 即上报设备环境
+# （含 VPN/utun 检测结果），Basic Auth + 加密 body。REJECT 后上报失败 → 服务器不判风险
+IP-CIDR,45.65.23.16/32,REJECT
+
+# ===== 平安银行系全直连（防走代理导致出口 IP 境外）=====
+DOMAIN-SUFFIX,pingan.com.cn,DIRECT
+DOMAIN-SUFFIX,sdb.com.cn,DIRECT
+DOMAIN-SUFFIX,orangebank.com.cn,DIRECT
+DOMAIN-SUFFIX,jk.cn,DIRECT
+DOMAIN-SUFFIX,1qianbao.com,DIRECT
+DOMAIN-SUFFIX,yqbimg.net,DIRECT
+
 [General]
 # 以下域名跳过代理直连（银行/运营商 App 检测代理时白名单）
-skip-proxy = www.baidu.com,yunbusiness.ccb.com,wxh.wo.cn,gate.lagou.com,www.abchina.com.cn,www.shanbay.com,login-service.mobile-bank.psbc.com,mobile-bank.psbc.com,id6.me,www.163.com
+skip-proxy = www.baidu.com,yunbusiness.ccb.com,wxh.wo.cn,gate.lagou.com,www.abchina.com.cn,www.shanbay.com,login-service.mobile-bank.psbc.com,mobile-bank.psbc.com,id6.me,www.163.com,pingan.com.cn,sdb.com.cn,orangebank.com.cn
 # 以下域名始终返回真实 IP（不参与 Fake IP，防 App 检测到 198.18.x.x 保留段）
-real-ip = easy-login.10099.com.cn,*-update.xoyocdn.com,id6.me,open.e.189.cn
+real-ip = easy-login.10099.com.cn,*-update.xoyocdn.com,id6.me,open.e.189.cn,cdn.sdb.com.cn
 
 # ===== 域名注释 =====
 # www.baidu.com：网上国网、多看阅读、顺丰金融、广东农信、丰云行、中国银行缤纷生活、通信行程卡、趣智校园、光大手机银行、掌上12333、沃视频
@@ -31,3 +44,6 @@ real-ip = easy-login.10099.com.cn,*-update.xoyocdn.com,id6.me,open.e.189.cn
 # id6.me 中国电信一键登录
 # www.163.com 交管12123
 # *-update.xoyocdn.com 剑网三无界
+# ===== 平安口袋银行（2026-08-19 新增）=====
+# pingan.com.cn / sdb.com.cn / orangebank.com.cn / jk.cn / 1qianbao.com / yqbimg.net 平安系全直连
+# cdn.sdb.com.cn 含 dns_detect.png（DNS 劫持检测探针），必须 real-ip 防 Fake IP 误判
