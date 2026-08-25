@@ -13,7 +13,8 @@
  *
  * Loon 配置:
  *   [Script]
- *   http-response ^https?:\/\/(api\.dongdianqiu\.com\/(v2\/article\/\d+\/comment|v3\/archive\/app\/tabs\/getlists)|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+) script-path=https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js, requires-body=true, timeout=60, tag=dqd_ad
+ *   [Script] (Loon >= 3.5.1 新版语法)
+ *   response if ${url} ~= /^https?:\/\/(api\.dongdianqiu\.com\/(v2\/article\/\d+\/comment|v3\/archive\/app\/(tabs\/getlists|channel\/feeds)|data\/index)|detail\.dongdianqiu\.com\/v2\/article\/detail\/\d+|ap\.dongdianqiu\.com\/plat\/v\d+)/i then script("https://raw.githubusercontent.com/dranklim/loon/main/plugins/dqd_ad.js") with requires_body=true, timeout=60, tag="dqd_ad"
  */
 
 let url = $request.url;
