@@ -44,6 +44,24 @@
 
 ---
 
+### RiskBlock_IPRewrite — 风控上报 IP 拦截（IP Rewrite）
+
+在 TUN 层拦截 **IP 直连**的风控/上报端点（如平安口袋银行 `45.65.23.16:8443/v3/report`）。用 Loon 3.5.3 新增的 `[IP Rewrite]` 模块实现——它在数据包进入 TUN 后**先于一切规则处理**，因此可以放进插件分发，不受「本地 [Rule] > 插件 > 订阅」优先级和订阅 ChinaIPs DIRECT 抢先的影响（旧机制下插件里的 IP 类 REJECT 会静默失效，只能写进主配置本地 [Rule]）。
+
+默认动作 `drop`（静默丢包）——比 REJECT 的「404 空体 + 毫秒级」响应更不像本地拦截。想快速失败就把该行改成 `reject`。
+
+### 一键导入（iOS 上直接点击即可）
+
+[⬇️ 一键导入风控拦截插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FRiskBlock_IPRewrite.plugin)
+
+[⬇️ 一键导入风控拦截插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FRiskBlock_IPRewrite.plugin)
+
+### 要求
+- **Loon 3.5.3 (1007)+**（`[IP Rewrite]` 为 3.5.3 新增模块）
+- 无需 MitM（纯 IP 层处理，不经过规则匹配/脚本）
+
+---
+
 ## 📁 规则订阅（rules/）
 
 ### civitai.list — civitai.red 分流
