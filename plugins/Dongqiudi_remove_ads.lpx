@@ -2,7 +2,7 @@
 #!desc = [v1.2.0] 懂球帝去广告：规则层拦截广告服务器（自营广告平台/广告图CDN/广告聚合/穿山甲/京东广告链路），脚本层清理评论区(role=ad_dplus)、详情页(dqd_ads/ad_content)和信息流列表(广告文章)。Script 已迁移新版语法，需 Loon ≥ 3.5.1
 #!author = dranklim
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/dongqiudi.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/dongqiudi.png
 #!system = iOS,iPadOS,tvOS
 #!loon_version = 3.5.1
 #!version = 1.2.0

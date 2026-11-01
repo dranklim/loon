@@ -19,7 +19,6 @@
 
 [⬇️ 一键导入配置 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fconfig%2FLoon_Advanced.conf)
 
-[⬇️ 一键导入配置 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?sub=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fconfig%2FLoon_Advanced.conf)
 
 ### 导入后必做
 1. **MitM 证书**：设置 → MitM → 生成证书 → 安装描述文件 → 设置中信任（配置已移除私钥，必须重新生成）
@@ -62,7 +61,6 @@
 
 [⬇️ 一键导入风控拦截插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FRiskBlock_IPRewrite.lpx)
 
-[⬇️ 一键导入风控拦截插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FRiskBlock_IPRewrite.lpx)
 
 ### 要求
 - **Loon 3.5.3 (1007)+**（`[IP Rewrite]` 为 3.5.3 新增模块）
@@ -88,11 +86,9 @@
 
 [⬇️ 一键导入 civitai 分流规则 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Frules%2Fcivitai.list)
 
-[⬇️ 一键导入 civitai 分流规则 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Frules%2Fcivitai.list)
 
 [⬇️ 一键导入 civitai 去广告规则 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Frules%2Fcivitai_ads.list)
 
-[⬇️ 一键导入 civitai 去广告规则 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Frules%2Fcivitai_ads.list)
 
 ### Civitai_remove_ads.lpx — civitai.red 去广告插件（推荐）
 
@@ -100,7 +96,6 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 [⬇️ 一键导入去广告插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FCivitai_remove_ads.lpx)
 
-[⬇️ 一键导入去广告插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FCivitai_remove_ads.lpx)
 
 ### SkipProxy_anti_detect.lpx — 银行/运营商 App 防 VPN 检测（推荐）
 
@@ -108,7 +103,6 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 [⬇️ 一键导入防检测插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FSkipProxy_anti_detect.lpx)
 
-[⬇️ 一键导入防检测插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FSkipProxy_anti_detect.lpx)
 
 ---
 
@@ -124,7 +118,6 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 ### 一键导入（iOS 上直接点击即可）
 
-[⬇️ 一键导入虎扑净化插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FHP_Clean.lpx)
 
 [⬇️ 一键导入虎扑净化插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FHP_Clean.lpx)
 
@@ -162,7 +155,7 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 把下面模板里的插件名替换即可（`MT` / `WB` / `Pinduoduo` ... 大小写敏感）：
 
-> 导入链接统一用 **raw 地址**（不经 jsdelivr）。jsdelivr 的分支引用缓存实测极度滞后（26 个文件 purge 后仍有 13 个返回旧版），已弃用。
+> 本仓库所有导入链接统一用 **raw 地址**，不使用 jsdelivr —— 实测其分支引用缓存极度滞后（26 个文件 purge 后仍有 13 个返回旧版）。
 >
 > raw 自身有 Fastly CDN 缓存，新提交后约 **几十秒到 5 分钟** 生效；若要绝对确定，把路径里的 `main` 换成 commit sha（`raw.githubusercontent.com/dranklim/loon/<commit>/plugins/qx/...`），内容不可变、永不滞后。
 
@@ -177,7 +170,7 @@ https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubuserconten
 ### 需要知道的三件事
 
 1. **脚本来源分两类**
-   - 12 个被引用的 JS 镜像在本仓库 `scripts/qx/`，经 jsdelivr 分发（国内直连）
+   - 12 个被引用的 JS 镜像在本仓库 `scripts/qx/`，经 raw 地址分发
    - `migu_vip.js`（含上游 API token）和 `easybike-ad.js`（含作者邮箱）**不镜像**，插件直接引用上游 raw 地址 —— 不把他人有效凭据扩散到另一个公开仓库
    - 另有 `PingMe.js` / `WeTalk.js` 含作者 SECRET 且未被任何插件引用，完全未收录
 
