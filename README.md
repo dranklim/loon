@@ -36,7 +36,7 @@
 
 ### 一键导入（iOS 上直接点击即可）
 
-[⬇️ 一键导入懂球帝去广告插件](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/dranklim/loon/main/plugins/Dongqiudi_remove_ads.plugin)
+[⬇️ 一键导入懂球帝去广告插件](https://www.nsloon.com/openloon/import?plugin=https://raw.githubusercontent.com/dranklim/loon/main/plugins/Dongqiudi_remove_ads.lpx)
 
 ### 要求
 - Loon 3.2.5 (789)+
@@ -52,9 +52,9 @@
 
 ### 一键导入（iOS 上直接点击即可）
 
-[⬇️ 一键导入风控拦截插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FRiskBlock_IPRewrite.plugin)
+[⬇️ 一键导入风控拦截插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FRiskBlock_IPRewrite.lpx)
 
-[⬇️ 一键导入风控拦截插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FRiskBlock_IPRewrite.plugin)
+[⬇️ 一键导入风控拦截插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FRiskBlock_IPRewrite.lpx)
 
 ### 要求
 - **Loon 3.5.3 (1007)+**（`[IP Rewrite]` 为 3.5.3 新增模块）
@@ -74,7 +74,7 @@
 
 > ⚠️ **远程规则订阅的策略在导入时选择，文件内不写策略**。若用 `?rules=` 导入，导入时策略必须选 **REJECT**；或直接引用：`https://raw.githubusercontent.com/dranklim/loon/main/rules/civitai_ads.list, policy=REJECT, tag=civitai_ads, enabled=true`
 >
-> ✅ **推荐用插件版**（plugins/Civitai_remove_ads.plugin），REJECT 内置，一键导入即生效，无需选策略。
+> ✅ **推荐用插件版**（plugins/Civitai_remove_ads.lpx），REJECT 内置，一键导入即生效，无需选策略。
 
 ### 一键导入（iOS 上直接点击即可）
 
@@ -86,21 +86,21 @@
 
 [⬇️ 一键导入 civitai 去广告规则 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?rules=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Frules%2Fcivitai_ads.list)
 
-### Civitai_remove_ads.plugin — civitai.red 去广告插件（推荐）
+### Civitai_remove_ads.lpx — civitai.red 去广告插件（推荐）
 
 REJECT 策略内置，一键导入即生效，无需手动选策略。
 
-[⬇️ 一键导入去广告插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FCivitai_remove_ads.plugin)
+[⬇️ 一键导入去广告插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FCivitai_remove_ads.lpx)
 
-[⬇️ 一键导入去广告插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FCivitai_remove_ads.plugin)
+[⬇️ 一键导入去广告插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FCivitai_remove_ads.lpx)
 
-### SkipProxy_anti_detect.plugin — 银行/运营商 App 防 VPN 检测（推荐）
+### SkipProxy_anti_detect.lpx — 银行/运营商 App 防 VPN 检测（推荐）
 
 解决银行 App 弹"网络环境存在安全风险"（农业银行实测有效）。核心：REJECT 农行 msmp 风控上报端点（App 检测到 TUN 会向 msmp.abchina.com.cn 上报，切断上报通道即不弹）+ skip-proxy/real-ip 直连白名单（建行/邮储/电信一键登录/交管12123 等）。源自 mieqq/skip-proxy-lists.sgmodule 改写。
 
-[⬇️ 一键导入防检测插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FSkipProxy_anti_detect.plugin)
+[⬇️ 一键导入防检测插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FSkipProxy_anti_detect.lpx)
 
-[⬇️ 一键导入防检测插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FSkipProxy_anti_detect.plugin)
+[⬇️ 一键导入防检测插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FSkipProxy_anti_detect.lpx)
 
 ---
 

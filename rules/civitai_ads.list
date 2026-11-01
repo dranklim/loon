@@ -3,7 +3,7 @@
 # 引用示例：
 #   [Remote Rule]
 #   https://raw.githubusercontent.com/dranklim/loon/main/rules/civitai_ads.list, policy=REJECT, tag=civitai_ads, enabled=true
-# 或推荐直接用插件：plugins/Civitai_remove_ads.plugin（策略内置，一键生效）
+# 或推荐直接用插件：plugins/Civitai_remove_ads.lpx（策略内置，一键生效）
 
 # ===== Snigel AdNgin 主广告引擎（核心，实测 cdn.snigelweb.com/adengine/civitai.com/loader.js 200）=====
 DOMAIN-SUFFIX,snigelweb.com
