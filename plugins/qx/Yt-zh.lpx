@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 Yt-zh.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 0 条重写 + 2 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/youtube.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/youtube.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -20,8 +20,8 @@
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-request if ${url} ~= /^https://www\.youtube\.com/api/timedtext\?.*_ytzhsub=1/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/yt-sub-clean.js")
-response if ${url} ~= /^https://www\.youtube\.com/api/timedtext\?/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/yt-zh-sub.js") with requires_body=true
+request if ${url} ~= /^https://www\.youtube\.com/api/timedtext\?.*_ytzhsub=1/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/yt-sub-clean.js")
+response if ${url} ~= /^https://www\.youtube\.com/api/timedtext\?/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/yt-zh-sub.js") with requires_body=true
 
 [Mitm]
 hostname = www.youtube.com

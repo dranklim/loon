@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 bili_view_ad_rewrite.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 5 条重写 + 5 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/bilibili.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/bilibili.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -28,11 +28,11 @@ response if ${url} ~= /^https?:\/\/api\.bilibili\.com\/x\/vip\/web\/vip_center\/
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.viewunite\.v1\.View\/View$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/bili_view_ad.js") with requires_body=true
-response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.playerunite\.v1\.Player\/PlayViewUnite$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/bili_view_ad.js") with requires_body=true
-response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.interface\.v1\.Search\/DefaultWords$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/bili_view_ad.js") with requires_body=true
-response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.show\.v1\.Popular\/Index$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/bili_view_ad.js") with requires_body=true
-response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.dynamic\.v2\.Dynamic\/DynAll$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/bili_view_ad.js") with requires_body=true
+response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.viewunite\.v1\.View\/View$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/bili_view_ad.js") with requires_body=true
+response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.playerunite\.v1\.Player\/PlayViewUnite$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/bili_view_ad.js") with requires_body=true
+response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.interface\.v1\.Search\/DefaultWords$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/bili_view_ad.js") with requires_body=true
+response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.show\.v1\.Popular\/Index$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/bili_view_ad.js") with requires_body=true
+response if ${url} ~= /^https:\/\/app\.bilibili\.com\/bilibili\.app\.dynamic\.v2\.Dynamic\/DynAll$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/bili_view_ad.js") with requires_body=true
 
 [Mitm]
 hostname = *bili*,api-pt.chuangyuejoy.com

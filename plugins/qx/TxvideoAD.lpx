@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 TxvideoAD.snippet 转换为 Loon Rewrite/Script v2 语法（2 条规则 + 0 条重写 + 5 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/txvideo.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/txvideo.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -25,11 +25,11 @@ DOMAIN,tacc.video.qq.com,REJECT
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-request if ${url} ~= /^https?:\/\/i\.video\.qq\.com\/(?:\?.*)?$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/Txvideoad.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/i\.video\.qq\.com\/(?:\?.*)?$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/Txvideoad.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/iacc\.qq\.com\/(?:\?.*)?$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/Txvideoad.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/config\.ab\.qq\.com\/tab\/GetTabRemoteConfig(?:\?.*)?$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/Txvideoad.js") with requires_body=true
-response if ${url} ~= /^https:\/\/rdelivery\.qq\.com\/v1\/sdkconfig\/get(?:\?.*)?$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/Txvideoad.js") with requires_body=true
+request if ${url} ~= /^https?:\/\/i\.video\.qq\.com\/(?:\?.*)?$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/Txvideoad.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/i\.video\.qq\.com\/(?:\?.*)?$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/Txvideoad.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/iacc\.qq\.com\/(?:\?.*)?$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/Txvideoad.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/config\.ab\.qq\.com\/tab\/GetTabRemoteConfig(?:\?.*)?$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/Txvideoad.js") with requires_body=true
+response if ${url} ~= /^https:\/\/rdelivery\.qq\.com\/v1\/sdkconfig\/get(?:\?.*)?$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/Txvideoad.js") with requires_body=true
 
 [Mitm]
 hostname = i.video.qq.com, iacc.qq.com, config.ab.qq.com, rdelivery.qq.com

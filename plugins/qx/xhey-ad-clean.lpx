@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 xhey-ad-clean.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 15 条重写 + 2 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/xiaohongshu.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/xiaohongshu.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -38,8 +38,8 @@ request if ${url} ~= /^https?:\/\/als\.baidu\.com\/clog\/glog(?:\?.*)?$/ then re
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-response if ${url} ~= /^https?:\/\/abtest-tx-beijing-01\.saas\.sensorsdata\.cn\/api\/v2\/abtest\/online\/results\?project-key=(?:0E6053C30A799D63EFA48959776B2EE2EDC81359|EE39C73914ED208E6EBE24A7333CAF5C3FE2E89D)/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/xhey-ad-clean.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/jt-sdk-ios\.oss-cn-beijing\.aliyuncs\.com\/iOSConfig\.txt(?:\?.*)?$/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/xhey-ad-clean.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/abtest-tx-beijing-01\.saas\.sensorsdata\.cn\/api\/v2\/abtest\/online\/results\?project-key=(?:0E6053C30A799D63EFA48959776B2EE2EDC81359|EE39C73914ED208E6EBE24A7333CAF5C3FE2E89D)/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/xhey-ad-clean.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/jt-sdk-ios\.oss-cn-beijing\.aliyuncs\.com\/iOSConfig\.txt(?:\?.*)?$/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/xhey-ad-clean.js") with requires_body=true
 
 [Mitm]
 hostname = abtest-tx-beijing-01.saas.sensorsdata.cn, api.anythinktech.com, da.anythinktech.com, tk.anythinktech.com, adx.anythinktech.com, api.toponadss.com, mobads.baidu.com, mobads-logs.baidu.com, mobads-pre-config.bj.bcebos.com, mobads-pre-config.cdn.bcebos.com, open.e.kuaishou.com, open.e.kuaishou.cn, stage2.chelaile.net.cn, ad.xhey.top, 39.108.85.131, sdk.1rtb.net, adx-strategy-api-cn.statisticslinks.com, adx-micro.statisticslinks.com, da.statisticslinks.com, tk.statisticslinks.com, sdkquic.e.qq.com, als.baidu.com, jt-sdk-ios.oss-cn-beijing.aliyuncs.com

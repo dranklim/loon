@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 MT.snippet 转换为 Loon Rewrite/Script v2 语法（46 条规则 + 2 条重写 + 8 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/meituan.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/meituan.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -74,14 +74,14 @@ request if ${url} ~= /^http:\/\/103\.37\.155\.60\/fetch/ then reject(404)
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-response if ${url} ~= /^https?:\/\/apimobile\.meituan\.com\/aggroup\/indexTab/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MT.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/feedguess\.meituan\.com\/lycoris\/scene\/(gwc_feed1_2265|personalcenter_2154)(\?|$)/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MT.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/mt-personalcenter\.meituan\.com\/usercenter\/display/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MT.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/apimobile\.meituan\.com\/group\/v1\/deal\/searchpage\/defaultword/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MT.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/apimobile\.meituan\.com\/group\/v1\/deal\/searchpage\/hotword\/city\/divide\/hotrecommend\// then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MT.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/assistify\.meituan\.com\/assistant\/getAppClientHornConfig/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MT.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/mop\.meituan\.com\/mop\/entry\/shoppingCartEntry/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MT.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/mop\.meituan\.com\/api\/entryModule\/startupPicture/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MT.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/apimobile\.meituan\.com\/aggroup\/indexTab/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MT.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/feedguess\.meituan\.com\/lycoris\/scene\/(gwc_feed1_2265|personalcenter_2154)(\?|$)/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MT.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/mt-personalcenter\.meituan\.com\/usercenter\/display/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MT.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/apimobile\.meituan\.com\/group\/v1\/deal\/searchpage\/defaultword/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MT.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/apimobile\.meituan\.com\/group\/v1\/deal\/searchpage\/hotword\/city\/divide\/hotrecommend\// then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MT.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/assistify\.meituan\.com\/assistant\/getAppClientHornConfig/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MT.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/mop\.meituan\.com\/mop\/entry\/shoppingCartEntry/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MT.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/mop\.meituan\.com\/api\/entryModule\/startupPicture/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MT.js") with requires_body=true
 
 [Mitm]
 hostname = apimobile.meituan.com, feedguess.meituan.com, mop.meituan.com, mt-personalcenter.meituan.com, assistify.meituan.com, httpdns.meituan.com, httpdnsmultiapi.meituan.com

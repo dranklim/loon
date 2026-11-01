@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 WxPureDominion.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 32 条重写 + 2 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/wechat.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/wechat.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -55,8 +55,8 @@ request if ${url} ~= /^https:\/\/web\.meituan\.com\/newUser\/returnMoney\/popWin
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-response if ${url} ~= /^https:\/\/web\.meituan\.com\/api\/miniprogram\/tabbar\/all\/query/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MeiTuanNoAd.js") with requires_body=true
-response if ${url} ~= /^https:\/\/web\.meituan\.com\/api\/miniprogram\/index\/aggregate/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/MeiTuanNoAd.js") with requires_body=true
+response if ${url} ~= /^https:\/\/web\.meituan\.com\/api\/miniprogram\/tabbar\/all\/query/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MeiTuanNoAd.js") with requires_body=true
+response if ${url} ~= /^https:\/\/web\.meituan\.com\/api\/miniprogram\/index\/aggregate/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/MeiTuanNoAd.js") with requires_body=true
 
 [Mitm]
 hostname = energy.xiaojukeji.com,gw3.ykccn.com,wx.17u.cn,web.meituan.com,npay.meituan.com,mapi.dianping.com,a1d5b283e-wx621112590b635086.sh.wxgateway.com,apimobile.meituan.com

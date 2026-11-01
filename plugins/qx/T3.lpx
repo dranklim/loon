@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 T3.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 16 条重写 + 0 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/t3.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/t3.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化

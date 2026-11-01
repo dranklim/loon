@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 xzimu-unlock.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 0 条重写 + 4 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/xzimu.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/xzimu.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -20,10 +20,10 @@
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-response if ${url} ~= /^http:\/\/apps\.tltgame\.com\/api\/user\/updateStatus/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/xzimu-unlock.js") with requires_body=true
-request if ${url} ~= /^http:\/\/apps\.tltgame\.com\/api\/task\/offline\/post/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/xzimu-unlock.js") with requires_body=true
-response if ${url} ~= /^http:\/\/apps\.tltgame\.com\/api\/task\/offline\/post/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/xzimu-unlock.js") with requires_body=true
-request if ${url} ~= /^http:\/\/47\.251\.39\.178:18080\/task\/runSegment/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/xzimu-unlock.js") with requires_body=true
+response if ${url} ~= /^http:\/\/apps\.tltgame\.com\/api\/user\/updateStatus/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/xzimu-unlock.js") with requires_body=true
+request if ${url} ~= /^http:\/\/apps\.tltgame\.com\/api\/task\/offline\/post/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/xzimu-unlock.js") with requires_body=true
+response if ${url} ~= /^http:\/\/apps\.tltgame\.com\/api\/task\/offline\/post/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/xzimu-unlock.js") with requires_body=true
+request if ${url} ~= /^http:\/\/47\.251\.39\.178:18080\/task\/runSegment/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/xzimu-unlock.js") with requires_body=true
 
 [Mitm]
 hostname = apps.tltgame.com,47.251.39.178

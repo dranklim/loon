@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 Youtube.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 5 条重写 + 1 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/youtube.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/youtube.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -28,7 +28,7 @@ request if ${url} ~= /^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext/ t
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-response if ${url} ~= /^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch)/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/youtube.response.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch)/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/youtube.response.js") with requires_body=true
 
 [Mitm]
 hostname = *.googlevideo.com, redirector*.googlevideo.com, www.youtube.com, s.youtube.com, youtubei.googleapis.com

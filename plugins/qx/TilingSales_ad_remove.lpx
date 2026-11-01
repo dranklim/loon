@@ -2,7 +2,7 @@
 #!desc = 由 ZenmoFeiShi/Qx 的 TilingSales_ad_remove.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 17 条重写 + 6 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
-#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/tilingsales.png
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/tilingsales.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 去广告,净化
@@ -40,12 +40,12 @@ request if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Resource\/CommentAd\/show/ then 
 
 # 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
 [Script]
-response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Resource\/Config\/getNav/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/TilingSales_getNav.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Ad\/barsPlayAdInfo/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/TilingSales_getNav.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Ad\/playAdInfo/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/TilingSales_getNav.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/IndexPlay\/vodAdvertisement/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/TilingSales_getNav.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Resource\/Vod\/showOne/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/TilingSales_getNav.js") with requires_body=true
-response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Resource\/Vod\/vurlDetail/ then script("https://cdn.jsdelivr.net/gh/dranklim/loon@main/scripts/qx/TilingSales_getNav.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Resource\/Config\/getNav/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/TilingSales_getNav.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Ad\/barsPlayAdInfo/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/TilingSales_getNav.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Ad\/playAdInfo/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/TilingSales_getNav.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/IndexPlay\/vodAdvertisement/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/TilingSales_getNav.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Resource\/Vod\/showOne/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/TilingSales_getNav.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/[\w.-]+\/App\/Resource\/Vod\/vurlDetail/ then script("https://raw.githubusercontent.com/dranklim/loon/main/scripts/qx/TilingSales_getNav.js") with requires_body=true
 
 [Mitm]
 hostname = api.mxtxqe.com, api.sef5w7.com, sdapi.u4gdp3.com, sdapi.4zu76s.com, sdapi.re3k7n.com, api.xqe4cxu.com, api.syq8gvw.com, api.zjypp7x.com, apinew.n3yje.icu, apinew.8hpt2duq.com, apinew.fzmfbdmg.com, api.7gmsut2m.com, api.gq89em.com
