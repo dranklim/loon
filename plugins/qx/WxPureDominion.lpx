@@ -1,11 +1,11 @@
-#!name = 微信净化 去广告（QX 迁移）
+#!name = 微信净化
 #!desc = 由 ZenmoFeiShi/Qx 的 WxPureDominion.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 32 条重写 + 2 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/wechat.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
-#!tag = QX迁移,去广告
+#!tag = 去广告,净化
 #!type = normal
 
 # ==========================================================================
