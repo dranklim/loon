@@ -162,15 +162,17 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 把下面模板里的插件名替换即可（`MT` / `WB` / `Pinduoduo` ... 大小写敏感）：
 
-> ⚠️ 用 jsdelivr 的 `@latest` 而非 `@main`：实测 `@main` 的分支缓存极度滞后（26 个文件 purge 后仍有一半返回旧版），`@latest` 基本能即时反映最新提交。若仍看到旧内容，把 `@latest` 换成 `@<commit-sha>`（永远准确）或改用 raw 地址。
+> 导入链接统一用 **raw 地址**（不经 jsdelivr）。jsdelivr 的分支引用缓存实测极度滞后（26 个文件 purge 后仍有 13 个返回旧版），已弃用。
+>
+> raw 自身有 Fastly CDN 缓存，新提交后约 **几十秒到 5 分钟** 生效；若要绝对确定，把路径里的 `main` 换成 commit sha（`raw.githubusercontent.com/dranklim/loon/<commit>/plugins/qx/...`），内容不可变、永不滞后。
 
 ```
-https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40latest%2Fplugins%2Fqx%2F<插件名>.lpx
+https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2F<插件名>.lpx
 ```
 
 常用几个直接点：
 
-[🛒 美团](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40latest%2Fplugins%2Fqx%2FMT.lpx) · [🛍 拼多多](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40latest%2Fplugins%2Fqx%2FPinduoduo.lpx) · [📱 微博](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40latest%2Fplugins%2Fqx%2FWB.lpx) · [📺 腾讯视频](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40latest%2Fplugins%2Fqx%2FTxvideoAD.lpx) · [🅱️ B站](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40latest%2Fplugins%2Fqx%2Fbili_view_ad_rewrite.lpx) · [📕 小红书](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40latest%2Fplugins%2Fqx%2Fxhey-ad-clean.lpx)
+[🛒 美团](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FMT.lpx) · [🛍 拼多多](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FPinduoduo.lpx) · [📱 微博](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FWB.lpx) · [📺 腾讯视频](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTxvideoAD.lpx) · [🅱️ B站](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fbili_view_ad_rewrite.lpx) · [📕 小红书](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fxhey-ad-clean.lpx)
 
 ### 需要知道的三件事
 
