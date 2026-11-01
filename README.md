@@ -30,6 +30,14 @@
 
 ## 📁 插件
 
+### 📐 命名与格式规范
+
+- **扩展名统一 `.lpx`** —— Loon 官方标准。官方文档的 `#!source` 校验示例、插件加密器、语法转换器一律以 `.lpx` 为例（转换器输入格式明列 `.lpx · .plugin · .conf · .txt`）。`.plugin` 属传统后缀，Loon 仍能识别，但**本仓库新增插件不再使用**。
+- **一律明文，不做加密。** `.lpx` 后缀**不代表**加密 —— 官方「插件加密器」输出的同样是这个后缀，两者后缀相同、内容有别。本仓库所有插件均为可读明文，用任意文本编辑器都能逐行审阅规则，不引入无法审计的黑盒配置。
+- **文件名格式 `<目标>_<用途>.lpx`**：`HP_Clean.lpx`（虎扑净化）、`Dongqiudi_remove_ads.lpx`（懂球帝去广告）、`SkipProxy_anti_detect.lpx`（防 VPN 检测）。
+- **新增插件必须同步更新**：`README.md` 的说明与导入链接；若上了 `docs/` 页面也要更新该页链接。历史上 `.plugin → .lpx` 是破坏性改名，旧链接会 404。
+- **发布前跑一遍隐私扫描**：SSID / Wi-Fi 名称、内网 IP、自有域名、证书私钥（`ca-p12`）、API key、邮箱、手机号，以及 git 历史（提交后仍可回溯）。
+
 ### Dongqiudi_remove_ads — 懂球帝去广告
 
 规则层拦截广告服务器（dab.dongdianqiu.com / uranus.jd.com 等）+ 脚本层清理数据广告位（热评伪装广告 / 详情页广告位）。
@@ -101,6 +109,28 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 [⬇️ 一键导入防检测插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FSkipProxy_anti_detect.lpx)
 
 [⬇️ 一键导入防检测插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FSkipProxy_anti_detect.lpx)
+
+---
+
+### HP_Clean — 虎扑去广告
+
+参考 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 的 `HP.snippet`（QuantumultX）改写为 **Loon Rewrite v2** 语法，10 条规则覆盖：图库入口、未读红点、热门标签/排行榜、搜索热搜、插屏广告、比分 Tab 与位置横幅、首页顶部轮播、预览页横幅、论坛冗余入口（个性换肤/专家预测/邀请好友/版主中心/JRs战术板/草稿箱/58同城 与「我的应用」卡片）、用户页 VIP 卡片。
+
+**相比原片段的改进：**
+- 🔧 **修掉写死的版本号**：原片段把两条规则的路径钉死成 `/3/8.0.86/`，App 一升级就失效（比分 Tab 和位置横幅会重新冒出来）。本插件所有规则的版本段统一改为通配 `\d+/[0-9.]+`，升到 9.x / 10.x 都不用改。
+- 🎛️ **10 项独立开关**（`[Argument]`）：原片段只能整份启用/停用，删多了没法逐项定位。现在哪一项有问题就单独关掉它。
+- 🧩 **请求阶段用 `reject_dict(200)`**：让 App 拿到合法空 JSON `{}`，比 404 或空 body 更不容易触发异常分支。图库那条仍用 `reject(200)` 空体（置空的是「模块入口」而非数据接口）。
+- 🛡️ **响应阶段统一 `response.json.*`**：只在 body 是合法 JSON 时才改写，接口返回错误页时自动跳过，不会把响应改坏。
+
+### 一键导入（iOS 上直接点击即可）
+
+[⬇️ 一键导入虎扑净化插件 · jsdelivr 镜像（国内直连）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2FHP_Clean.lpx)
+
+[⬇️ 一键导入虎扑净化插件 · raw 链接（需代理）](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FHP_Clean.lpx)
+
+### 要求
+- **Loon 3.5.1 (978)+**（`[Rewrite]` v2 语法；`[Argument]` 需 Build 733+）
+- 需启用 MitM 并信任证书 —— 否则 HTTPS 无法解密，所有规则静默失效
 
 ---
 
