@@ -1,4 +1,4 @@
-#!name = 小红书 去广告
+#!name = 小红书去广告
 #!desc = 由 ZenmoFeiShi/Qx 的 xhey-ad-clean.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 15 条重写 + 2 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon

@@ -1,4 +1,4 @@
-#!name = 腾讯视频 去广告
+#!name = 腾讯视频去广告
 #!desc = 由 ZenmoFeiShi/Qx 的 TxvideoAD.snippet 转换为 Loon Rewrite/Script v2 语法（2 条规则 + 0 条重写 + 5 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
