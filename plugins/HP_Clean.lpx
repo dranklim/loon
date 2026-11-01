@@ -2,6 +2,7 @@
 #!desc = 虎扑 App 去广告：图库入口、未读红点、热门标签/排行榜、搜索热搜、插屏广告、比分Tab横幅、首页轮播、预览横幅、论坛冗余图标、用户页VIP卡片。用 Loon Rewrite v2 语法重写，版本号已通配，App 升级不失效。
 #!author = dranklim
 #!homepage = https://github.com/dranklim/loon
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/hupu.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(978)
 #!date = 2026-10-27
