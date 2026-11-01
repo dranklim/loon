@@ -10,6 +10,38 @@
 #!type = normal
 
 # ============================================================================
+# 来源声明 / Attribution
+# ----------------------------------------------------------------------------
+# 本插件的全部拦截规则源自开源项目 ZenmoFeiShi/Qx 的 HP.snippet（QuantumultX 片段）：
+#   https://github.com/ZenmoFeiShi/Qx/blob/main/HP.snippet
+#
+#   原作者     : 怎么肥事（HP.snippet 头部 #!author 字段）
+#   上游版本   : 2026-04-14（commit f254dd4d，该文件最后一次更新）
+#   上游许可   : 该仓库未声明 LICENSE，版权归原作者所有。本插件仅做
+#                QuantumultX → Loon Rewrite v2 的语法转换与本地增强，
+#                拦截语义与原片段保持一致，并在此保留完整署名。
+#                若原作者对分发有异议，告知后即行撤下。
+#
+#   转换与增强（详见文末「迁移说明」）：
+#     · 语法转换：url reject-200/reject-dict → reject()/reject_dict()
+#                 jsonjq-response-body → response.json.jq()
+#     · 修复上游硬伤：上游两条规则把版本段写死成 /3/8.0.86/，App 一升级即失效，
+#                     本插件改为通配 \d+/[0-9.]+
+#     · 新增 [Argument] 十项独立开关（上游只能整份启用停用）
+#
+# 上游同步机制 / Upstream sync
+# ----------------------------------------------------------------------------
+#   cron 任务 qx-hp-sync 每日监控上游 HP.snippet 的 sha256 变化，
+#   一旦上游更新会推送通知（含新旧哈希与规则数对比），人工确认差异后再发布新版。
+#
+#     监控脚本 : /root/.hermes/scripts/qx_hp_watch.sh
+#     同步脚本 : /root/.hermes/scripts/qx_hp_sync.py  [--diff | --apply]
+#     状态文件 : /root/.hermes/state/qx_hp_last_sha
+#
+#   同时监控该仓库是否新增虎扑相关文件（例如作者若重新提供 HP.js）。
+# ============================================================================
+
+# ============================================================================
 # 参数：每项功能可独立开关（[Argument] 需 Build 733+，Loon 界面自动生成开关）
 # 关掉某一项 = 对应规则不执行，接口恢复原样，方便逐项排查"删多了"
 # ============================================================================
@@ -38,9 +70,9 @@ request if ${searchHot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\
 request if ${interstitial} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+|batch)/ then reject_dict(200)
 request if ${scoreTab} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bplcommentapi\/bpl\/score_tab\/groups|bplapi\/banner\/getLocationBanners)/ then reject_dict(200)
 response if ${previewBanner} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.com\/mang\/preview\/banners/ then response.json.jq(`.data = null`)
-response if ${hotBanner} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/buffer\/hotList/ then response.json.jq(`del(.result.topBanner)`)
-response if ${vipCard} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bplapi\/user\/v1\/more/ then response.json.delete("result.vipInfo")
+response if ${hotBanner} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/buffer\/hotList/ then response.json.delete("result.topBanner")
 response if ${legoIcons} == true && ${url} ~= /^https:\/\/bbs\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bbsallapi\/lego\/data/ then response.json.jq(`.data.cards |= map(if .code == "multiIcon" then .components |= map(select(.data.title != "个性换肤" and .data.title != "专家预测" and .data.title != "邀请好友" and .data.title != "版主中心" and .data.title != "JRs战术板" and .data.title != "草稿箱" and .data.title != "58同城")) else . end) | .data.cards |= map(select(.components | if type == "array" then all(.data.title != "我的应用") else true end))`)
+response if ${vipCard} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bplapi\/user\/v1\/more/ then response.json.delete("result.vipInfo")
 
 [Mitm]
 hostname = *.hupu.com
