@@ -18,9 +18,14 @@
 #   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
 # ==========================================================================
 
+# 参数开关（Loon 界面自动生成，默认值见下）
+# 关掉 = 对应规则不执行，接口恢复原样
+[Argument]
+fakeProfile = switch,false,tag=伪造个人资料,desc=把等级改20/粉丝99999/经验94575543，与去广告无关，默认关闭
+
 # URL 重写（来自 QX url reject-* / jsonjq-response-body）
 [Rewrite]
-response if ${url} ~= /^https:\/\/api\.coolapk\.com\/v6\/user\/profile/ then response.json.jq(`.data.level = 20 | .data.fans = 99999 | .data.experience = 94575543 | .data.next_level_experience = 200000000`)
+response if ${fakeProfile} == true && ${url} ~= /^https:\/\/api\.coolapk\.com\/v6\/user\/profile/ then response.json.jq(`.data.level = 20 | .data.fans = 99999 | .data.experience = 94575543 | .data.next_level_experience = 200000000`)
 request if ${url} ~= /^https:\/\/api\.coolapk\.com\/v6\/search\?.*type=hotSearch/ then reject_dict(200)
 response if ${url} ~= /^https:\/\/api\.coolapk\.com\/v6\/main\/init/ then response.json.jq(`del(.data[]? | select(.entityId == 944 or .entityId == 945 or .entityId == 24455 or .entityId == 36839 or .entityId == 1635 or .title == "关注")) | .data |= map(if .entities then .entities |= map(select(.entityId != 1635 and .entityId != 2261 and .entityId != 1633 and .entityId != 413 and .entityId != 417 and .entityId != 1754 and .entityId != 1966 and .entityId != 2274 and .entityId != 1170 and .entityId != 1175 and .entityId != 1190 and .entityId != 2258 and .title != "关注")) else . end)`)
 response if ${url} ~= /^https:\/\/api\.coolapk\.com\/v6\/main\/indexV8/ then response.json.jq(`.data |= map(select((.entityId != 32557 and .entityId != 29349 and .entityId != 28621) and (.title | test("值得买|红包") | not)))`)
