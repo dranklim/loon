@@ -134,5 +134,62 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 ---
 
+## 📦 QX 迁移套件（plugins/qx/）
+
+把 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 仓库的**全部 QuantumultX snippet** 批量转换为 Loon 插件，共 **26 个**（虎扑因为另有手写增强版 `HP_Clean.lpx`，未重复收录）。
+
+转换器：[`qx2loon.py`](https://github.com/dranklim/loon/blob/main/scripts/qx2loon.py)（通用、可重跑），覆盖 16 种 QX 语法。
+
+### 插件清单
+
+| 插件 | 内容 | 插件 | 内容 |
+|---|---|---|---|
+| `MT` 美团 | 46 规则 + 8 脚本 | `Pinduoduo` 拼多多 | 9 规则 + 23 重写 |
+| `WB` 微博 | 5 规则 + 25 重写 | `Didichuxing` 滴滴 | 16 规则 + 24 重写 |
+| `WxPureDominion` 微信 | 32 重写 + 2 脚本 | `Soul` | 18 重写 |
+| `Smzdm` 什么值得买 | 13 重写 | `xhey-ad-clean` 小红书 | 15 重写 + 2 脚本 |
+| `T3` T3出行 | 16 重写 | `hlwxx_remove_ads` | 13 重写 + 2 脚本 |
+| `TB` 贴吧 | 2 规则 + 7 重写 + 2 脚本 | `TH` 途虎养车 | 7 重写 |
+| `Keep` | 2 规则 + 9 重写 | `KuAn` 酷安 | 6 重写 |
+| `Youtube` | 5 重写 + 1 脚本 | `Yt-zh` YouTube字幕 | 2 脚本 |
+| `bili_view_ad_rewrite` B站 | 5 重写 + 5 脚本 | `TxvideoAD` 腾讯视频 | 2 规则 + 5 脚本 |
+| `helloobike` 哈啰 | 4 重写 + 4 脚本 | `TilingSales_ad_remove` | 17 重写 + 6 脚本 |
+| `xzimu-unlock` 字幕 | 4 脚本 | `mgtv_vip` 芒果TV | 1 脚本 |
+| `migu_vip_share` 咪咕 | 2 脚本 | `Cwkj` 菜鸟 | 2 重写 |
+| `SF` 顺丰 | 4 重写 | `xTerm256` iTunes | 1 重写 |
+
+### 一键导入
+
+把下面模板里的插件名替换即可（`MT` / `WB` / `Pinduoduo` ... 大小写敏感）：
+
+```
+https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2Fqx%2F<插件名>.lpx
+```
+
+常用几个直接点：
+
+[🛒 美团](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2Fqx%2FMT.lpx) · [🛍 拼多多](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2Fqx%2FPinduoduo.lpx) · [📱 微博](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2Fqx%2FWB.lpx) · [📺 腾讯视频](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2Fqx%2FTxvideoAD.lpx) · [🅱️ B站](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2Fqx%2Fbili_view_ad_rewrite.lpx) · [📕 小红书](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdranklim%2Floon%40main%2Fplugins%2Fqx%2Fxhey-ad-clean.lpx)
+
+### 需要知道的三件事
+
+1. **脚本来源分两类**
+   - 12 个被引用的 JS 镜像在本仓库 `scripts/qx/`，经 jsdelivr 分发（国内直连）
+   - `migu_vip.js`（含上游 API token）和 `easybike-ad.js`（含作者邮箱）**不镜像**，插件直接引用上游 raw 地址 —— 不把他人有效凭据扩散到另一个公开仓库
+   - 另有 `PingMe.js` / `WeTalk.js` 含作者 SECRET 且未被任何插件引用，完全未收录
+
+2. **`TB` 贴吧插件有 2 条规则被注释**：上游 `TB.snippet` 调用了 `tieba-json.js` / `tieba-proto.js`，但这两个文件在上游仓库里根本不存在。保留规则只会让 Loon 每次 404，所以注释保留并在插件内注明。上游补上文件后重新生成即可恢复。
+
+3. **上游有变化会自动通知**：cron 任务 `qx-suite-sync` 每日比对上游全部 snippet + js 的 sha256，有新增/修改/删除会推送清单。同步命令：
+   ```bash
+   python3 qx2loon.py --fetch     # 拉取最新 snippet + js
+   python3 qx2loon.py --build     # 重新生成 lpx
+   ```
+
+### 来源与许可
+
+所有规则与脚本源自 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx)（原作者 `TG@ZenMoFiShi` / `怎么肥事`，以各 snippet 头部 `#!author` 为准）。该仓库**未声明 LICENSE**，版权归原作者；本仓库仅做 QuantumultX → Loon 语法转换并保留署名，原作者有异议即行撤下。
+
+---
+
 ## License
 MIT
