@@ -1,6 +1,7 @@
 #!name = 风控上报 IP 拦截 (IP Rewrite)
 #!desc = 在 TUN 层拦截 IP 直连的风控/上报端点，绕过「本地 > 插件 > 订阅」优先级，不受订阅 ChinaIPs DIRECT 抢先影响。需 Loon 3.5.3(1007)+
 #!author = dranklim
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/riskblock_ip.png
 #!loon_version = 3.5.3(1007)
 
 # ============ 说明区（以下注释全部在 [IP Rewrite] 段外，安全）============

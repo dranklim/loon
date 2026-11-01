@@ -2,6 +2,7 @@
 #!desc = 跳过部分应用的代理检测（银行/运营商 App 防 VPN 弹窗）。核心：REJECT 风控上报端点（农行 msmp + 平安口袋银行 IP 通道）+ skip-proxy/real-ip 直连名单。源自 mieqq/skip-proxy-lists.sgmodule，扩展平安口袋银行抓包分析（2026-08）
 #!author = dranklim
 #!homepage = https://github.com/dranklim/loon
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/skipproxy.png
 #!system = iOS,iPadOS,tvOS
 #!loon_version = 3.2.5
 #!tag = 防检测,银行,直连

@@ -2,6 +2,7 @@
 #!desc = civitai.red 去广告（Snigel AdNgin / Google Ad Manager / AnyClip / GTM / 自营打点）
 #!author = dranklim
 #!homepage = https://github.com/dranklim/loon
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/civitai.png
 #!system = iOS,iPadOS,tvOS
 #!loon_version = 3.2.5
 #!tag = 去广告
