@@ -1,0 +1,84 @@
+#!name = 虎扑净化
+#!desc = 虎扑 App 去广告：图库入口、未读红点、热门标签/排行榜、搜索热搜、插屏广告、比分Tab横幅、首页轮播、预览横幅、论坛冗余图标、用户页VIP卡片。用 Loon Rewrite v2 语法重写，版本号已通配，App 升级不失效。
+#!author = dranklim
+#!homepage = https://github.com/dranklim/loon
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(978)
+#!date = 2026-10-27
+#!tag = 去广告,虎扑,净化
+#!type = normal
+
+# ============================================================================
+# 参数：每项功能可独立开关（[Argument] 需 Build 733+，Loon 界面自动生成开关）
+# 关掉某一项 = 对应规则不执行，接口恢复原样，方便逐项排查"删多了"
+# ============================================================================
+[Argument]
+gallery = switch,true,tag=图库模块,desc=图库聚合页置空（返回 200 空体）
+reddot = switch,true,tag=未读红点,desc=屏蔽红点查询接口
+hotTag = switch,true,tag=热门标签与排行榜,desc=社区页热门标签、排行榜
+searchHot = switch,true,tag=搜索热搜,desc=搜索框热搜词与联想提示
+interstitial = switch,true,tag=插屏广告,desc=开屏/切页插屏（goblin 域）
+scoreTab = switch,true,tag=比分Tab与位置横幅,desc=比赛页比分Tab、banner/getLocationBanners
+hotBanner = switch,true,tag=首页顶部轮播,desc=热门列表 hotList 的 topBanner
+previewBanner = switch,true,tag=预览页横幅,desc=预览接口的 data 置 null
+legoIcons = switch,true,tag=论坛冗余入口,desc=个性换肤/专家预测/邀请好友/版主中心/JRs战术板/草稿箱/58同城 与「我的应用」卡片
+vipCard = switch,true,tag=用户页VIP,desc=「我的」页面 VIP 信息卡
+
+# ============================================================================
+# Rewrite v2 规则区
+# 语法: <phase> if <condition> then <action> [| <action> ...]
+# 与原 QuantumultX 片段的差异见文末「迁移说明」
+# ============================================================================
+[Rewrite]
+request if ${gallery} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.com\/gallery\/getmod2/ then reject(200)
+request if ${reddot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bplapi\/reddot\/v1\/app\/getReddot/ then reject_dict(200)
+request if ${hotTag} == true && ${url} ~= /^https:\/\/bbs\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bbsallapi\/tag\/v1\/heatTag|bbsrankapi\/v1\/rating\/list)/ then reject_dict(200)
+request if ${searchHot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/search\/v2\/(hintkeylist|hotkeylist)/ then reject_dict(200)
+request if ${interstitial} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+|batch)/ then reject_dict(200)
+request if ${scoreTab} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bplcommentapi\/bpl\/score_tab\/groups|bplapi\/banner\/getLocationBanners)/ then reject_dict(200)
+response if ${previewBanner} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.com\/mang\/preview\/banners/ then response.json.jq(`.data = null`)
+response if ${hotBanner} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/buffer\/hotList/ then response.json.jq(`del(.result.topBanner)`)
+response if ${vipCard} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bplapi\/user\/v1\/more/ then response.json.delete("result.vipInfo")
+response if ${legoIcons} == true && ${url} ~= /^https:\/\/bbs\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bbsallapi\/lego\/data/ then response.json.jq(`.data.cards |= map(if .code == "multiIcon" then .components |= map(select(.data.title != "个性换肤" and .data.title != "专家预测" and .data.title != "邀请好友" and .data.title != "版主中心" and .data.title != "JRs战术板" and .data.title != "草稿箱" and .data.title != "58同城")) else . end) | .data.cards |= map(select(.components | if type == "array" then all(.data.title != "我的应用") else true end))`)
+
+[Mitm]
+hostname = *.hupu.com
+
+# ============================================================================
+# 迁移说明（本段是注释，位于所有配置段之外，Loon 不解析）
+#
+# 来源：ZenmoFeiShi/Qx @b03dc05 HP.snippet（QuantumultX，2026-04-14）
+#
+# 一、语法升级（QX → Loon Rewrite v2）
+#   url reject-200        → reject(200)
+#   url reject-dict       → reject_dict(200)       返回 JSON {}
+#   jsonjq-response-body  → response.json.jq(`...`) 直接吃 jq 表达式
+#   del(.result.vipInfo)  → response.json.delete("result.vipInfo")  显式 JSON 删除
+#
+# 二、修掉原片段的硬伤（两条规则写死版本号）
+#   原 QX 第 6、7 条把版本段写死成 /3/8.0.86/：
+#     ^https://games.mobileapi.hupu.com/3/8.0.86/bplcommentapi/bpl/score_tab/groups
+#     ^https://games.mobileapi.hupu.com/3/8.0.86/bplapi/banner/getLocationBanners
+#   App 一旦升级（例如 8.1.x），这两条立刻失效 —— 比分Tab和位置横幅会重新出现。
+#   本插件统一改为通配：\d+/[0-9.]+ ，同时把其余规则的 \d/\d\.\d\.\d+ 也放宽，
+#   以后升级到 9.x、10.x 都不用改插件。
+#
+# 三、新增能力
+#   · [Argument] 十项独立开关 —— 原片段只能整份启用/停用，删多了没法逐项排查
+#   · 请求阶段用 reject_dict(200) 让 App 拿到合法空 JSON，比 404/空体更不易触发
+#     异常分支（图库那条仍用 reject(200) 空体，与原片段一致，因为它是「模块入口」
+#     置空而非数据接口）
+#   · 响应阶段统一用 response.json.* —— 只在 body 是合法 JSON 时才改写，
+#     接口返回错误页/非 JSON 时自动跳过，不会把响应搞坏
+#
+# 四、使用前提
+#   1. 必须开启 MitM 并在 Loon 内安装、信任证书（否则 HTTPS 无法解密，规则不生效）
+#   2. 若某项无效，先在插件参数里单独关掉其他项排查；虎扑若对特定域名做了
+#      SSL Pinning，对应规则会静默失效（可在 Loon 请求记录里看该域名是否有解密）
+#   3. 接口路径随 App 版本会变，失效时抓包更新对应正则即可，不必改结构
+#
+# 五、未使用的更强手段（按需再加）
+#   [IP Rewrite] 单个 IPv4 = drop   —— 若某广告走 IP 直连、域名规则拦不到，
+#                                     它先于一切规则处理，且 drop 比 REJECT 更隐蔽
+#   [General] include-tun           —— 让指定 IPv4 段进 TUN（本插件不需要）
+# ============================================================================
