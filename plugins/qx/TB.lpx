@@ -1,0 +1,45 @@
+#!name = 百度贴吧 去广告（QX 迁移）
+#!desc = 由 ZenmoFeiShi/Qx 的 TB.snippet 转换为 Loon Rewrite/Script v2 语法（2 条规则 + 7 条重写 + 0 条脚本）
+#!author = dranklim（转换）
+#!homepage = https://github.com/dranklim/loon
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/tieba.png
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(983)
+#!tag = QX迁移,去广告
+#!type = normal
+
+# ==========================================================================
+# 来源声明 / Attribution
+#   规则与脚本源自开源项目 ZenmoFeiShi/Qx 的 TB.snippet
+#   https://github.com/ZenmoFeiShi/Qx/blob/main/TB.snippet
+#   原作者：TG@ZenMoFiShi / 怎么肥事（以 snippet 头部 #!author 为准）
+#   该仓库未声明 LICENSE，版权归原作者；本插件仅做 QuantumultX → Loon 语法转换，
+#   脚本镜像至本仓库 scripts/qx/ 以便国内直连。原作者有异议即行撤下。
+#   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
+# ==========================================================================
+
+# 域名 / IP 层拦截（来自 QX host / ip-cidr 规则）
+[Rule]
+DOMAIN,afd.baidu.com,REJECT
+DOMAIN,mobads.baidu.com,REJECT
+
+# URL 重写（来自 QX url reject-* / jsonjq-response-body）
+[Rewrite]
+request if ${url} ~= /^https:\/\/tiebac\.baidu\.com\/c\/u\/chat\/getChatSubscriptionList/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/tiebac\.baidu\.com\/c\/f\/search\/discover/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/tiebac\.baidu\.com\/c\/f\/forum\/forumGuide/ then reject_dict(200)
+response if ${url} ~= /^https:\/\/tiebac\.baidu\.com\/livefeed\/feed/ then response.json.delete("data.banner.items")
+response if ${url} ~= /^https:\/\/tiebac\.baidu\.com\/c\/f\/sidebar\/home/ then response.json.jq(`del(.vip_banner, .tools)`)
+response if ${url} ~= /^https:\/\/tiebac\.baidu\.com\/c\/u\/user\/profile/ then response.json.jq(`del(.banner, .duxiaoman_entry, .recom_naws_list, .vip_banner, .namoaixud_entry, .user.user_growth, .zone_info[1].commerce, .zone_info[2].banner, .zone_info[0].common_func, .zone_info[3].game, .zone_info[4].auxiliary_func) | .custom_grid |= map(select(.type != 60 and .type != 53 and .type != 58 and .type != 50 and .type != 10 and .type != 64 and .type != 51 and .type != 52 and .type != 55 and .type != 57 and .type != 62))`)
+response if ${url} ~= /^https:\/\/tieba\.baidu\.com\/c\/f\/frs\/frsBottom/ then response.json.jq(`del(.card_activity.small_card, .card_activity.big_card, .ai_chatroom_guide)`)
+
+# 以下规则因上游缺失对应脚本文件而注释保留（不是本插件出错）
+# ↑ 原规则调用 tieba-json.js，但上游仓库无此文件，已注释（原 action: script-response-body）
+# ↑ 原规则调用 tieba-proto.js，但上游仓库无此文件，已注释（原 action: script-response-body）
+
+[Mitm]
+hostname = tieba.baidu.com, tiebac.baidu.com
+
+# ===== 转换告警（需人工复核）=====
+#   ! 上游缺失脚本 tieba-json.js，该规则已注释保留
+#   ! 上游缺失脚本 tieba-proto.js，该规则已注释保留

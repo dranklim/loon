@@ -1,0 +1,40 @@
+#!name = Keep 去广告（QX 迁移）
+#!desc = 由 ZenmoFeiShi/Qx 的 Keep.snippet 转换为 Loon Rewrite/Script v2 语法（2 条规则 + 9 条重写 + 0 条脚本）
+#!author = dranklim（转换）
+#!homepage = https://github.com/dranklim/loon
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/keep.png
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(983)
+#!tag = QX迁移,去广告
+#!type = normal
+
+# ==========================================================================
+# 来源声明 / Attribution
+#   规则与脚本源自开源项目 ZenmoFeiShi/Qx 的 Keep.snippet
+#   https://github.com/ZenmoFeiShi/Qx/blob/main/Keep.snippet
+#   原作者：TG@ZenMoFiShi / 怎么肥事（以 snippet 头部 #!author 为准）
+#   该仓库未声明 LICENSE，版权归原作者；本插件仅做 QuantumultX → Loon 语法转换，
+#   脚本镜像至本仓库 scripts/qx/ 以便国内直连。原作者有异议即行撤下。
+#   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
+# ==========================================================================
+
+# 域名 / IP 层拦截（来自 QX host / ip-cidr 规则）
+[Rule]
+DOMAIN,hc-ssp.sm.cn,REJECT
+DOMAIN,httpdns.calorietech.com,REJECT
+
+# URL 重写（来自 QX url reject-* / jsonjq-response-body）
+[Rewrite]
+request if ${url} ~= /^https:\/\/api\.gotokeep\.com\/messenger\/v\d\/conversations\/unread/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/kad\.gotokeep\.com\/op-engine-webapp\/v\d\/ad/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.gotokeep\.com\/op-engine-webapp\/v\d\/ad\/preload/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.gotokeep\.com\/search\/v\d\/hotHashtag\/list/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.gotokeep\.com\/search\/v\d\/hotCourse\/list/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.gotokeep\.com\/search\/v\d\/hotword\/list/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.gotokeep\.com\/search\/v\d\/default\/keyword\/list/ then reject_dict(200)
+response if ${url} ~= /^https:\/\/api\.gotokeep\.com\/athena\/v\d\/people\/my/ then response.json.jq(`del(.data.memberInfo) | .data.groupTags |= map(select(.tags | all(.name != "订单与钱包" and .name != "我的团队" and .name != "帮助中心")))`)
+response if ${url} ~= /^https:\/\/api\.gotokeep\.com\/config\/v\d\/basic/ then response.json.jq(`.data.coursePageConfigs.courseTabs |= map(select(.name != "直播" and .name != "会员")) | .data.bottomBarControl.tabs |= map(select(.name != "商城" and .name != "课程" and .name != "今日"))`)
+
+[Mitm]
+hostname = kad.gotokeep.com, 42.187.199.248, api.gotokeep.com
+

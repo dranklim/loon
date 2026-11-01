@@ -1,0 +1,39 @@
+#!name = 什么值得买 去广告（QX 迁移）
+#!desc = 由 ZenmoFeiShi/Qx 的 Smzdm.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 13 条重写 + 0 条脚本）
+#!author = dranklim（转换）
+#!homepage = https://github.com/dranklim/loon
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/smzdm.png
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(983)
+#!tag = QX迁移,去广告
+#!type = normal
+
+# ==========================================================================
+# 来源声明 / Attribution
+#   规则与脚本源自开源项目 ZenmoFeiShi/Qx 的 Smzdm.snippet
+#   https://github.com/ZenmoFeiShi/Qx/blob/main/Smzdm.snippet
+#   原作者：TG@ZenMoFiShi / 怎么肥事（以 snippet 头部 #!author 为准）
+#   该仓库未声明 LICENSE，版权归原作者；本插件仅做 QuantumultX → Loon 语法转换，
+#   脚本镜像至本仓库 scripts/qx/ 以便国内直连。原作者有异议即行撤下。
+#   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
+# ==========================================================================
+
+# URL 重写（来自 QX url reject-* / jsonjq-response-body）
+[Rewrite]
+request if ${url} ~= /^https:\/\/haojia\.m\.smzdm\.com\/detail_modul\/(other_modul|wiki_related_modul)/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/s3\.zdmimg\.com\/third\/index/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/app-api\.smzdm\.com\/util\/loading/ then reject_dict(200)
+response if ${url} ~= /^https:\/\/haojia-api\.smzdm\.com\/home\/list/ then response.json.jq(`del(.data.banner_v2, .data.widget) | if .data.rows then .data.rows |= map(select(has("ad_banner_id") | not) | select(.ad != "ad_campaign_id_" and .ad != "ad_campaign_name" and .ad != "abs_position")) else . end`)
+response if ${url} ~= /^https:\/\/app-api\.smzdm\.com\/util\/update/ then response.json.jq(`del(.data.ad_black_list, .data.operation_float, .data.haojia_widget)`)
+response if ${url} ~= /^https:\/\/homepage-api\.smzdm\.com\/v3\/home/ then response.json.jq(`def clean: if type == "array" then map(clean) | map(select(. != null)) elif type == "object" then if .cell_type == "23008" or .cell_type == "23005" or .cell_type == "23024" then null else with_entries(.value |= clean) end else . end; .data |= clean | .data.functions |= map(select(.type == "message")) | .data.component |= map(select(.zz_type == "circular_banner" or .zz_type == "fixed_banner" or .zz_type == "filter" or .zz_type == "list")) | del(.data.widget, .data.operation_float_screen)`)
+response if ${url} ~= /^https:\/\/s-api\.smzdm\.com\/sou\/list_v10/ then response.json.jq(`if .data.rows then .data.rows |= map(select(.model_type != "ads" and .article_tag != "广告" and .tag != "广告" and .left_tag != "广告" and .expose_sct != "广告" and .promotion_type != 3)) else . end`)
+response if ${url} ~= /^https:\/\/user-api\.smzdm\.com\/vip/ then response.json.jq(`del(.data.big_banner, .data.top_banner, .data.yaoqingshaiwu)`)
+response if ${url} ~= /^https:\/\/user-api\.smzdm\.com\/vip\/bottom_card_list/ then response.json.delete("data.rows")
+response if ${url} ~= /^https:\/\/article-api\.smzdm\.com\/publish\/get_bubble/ then response.json.jq(`.data = null`)
+response if ${url} ~= /^https:\/\/qianbao\.smzdm\.com\/v\d\/app\/home/ then response.json.jq(`.data |= map(select(.id == "40" or .id == "20"))`)
+response if ${url} ~= /^https:\/\/haojia\.m\.smzdm\.com\/detail_modul\/user_related_modul/ then response.json.delete("data.super_coupon")
+response if ${url} ~= /^https:\/\/post\.m\.smzdm\.com\/ajax_app\/ajax_get_footer_list/ then response.json.jq(`if .data.activity_banner.hot_widget then .data.activity_banner.hot_widget |= map(del(.pic_url)) else . end`)
+
+[Mitm]
+hostname = haojia-api.smzdm.com, s-api.smzdm.com, homepage-api.smzdm.com, app-api.smzdm.com, user-api.smzdm.com, article-api.smzdm.com, qianbao.smzdm.com, s3.zdmimg.com, post.m.smzdm.com, haojia.m.smzdm.com
+

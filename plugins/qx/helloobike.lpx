@@ -1,0 +1,37 @@
+#!name = 哈啰 去广告（QX 迁移）
+#!desc = 由 ZenmoFeiShi/Qx 的 helloobike.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 4 条重写 + 4 条脚本）
+#!author = dranklim（转换）
+#!homepage = https://github.com/dranklim/loon
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/hellobike.png
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(983)
+#!tag = QX迁移,去广告
+#!type = normal
+
+# ==========================================================================
+# 来源声明 / Attribution
+#   规则与脚本源自开源项目 ZenmoFeiShi/Qx 的 helloobike.snippet
+#   https://github.com/ZenmoFeiShi/Qx/blob/main/helloobike.snippet
+#   原作者：TG@ZenMoFiShi / 怎么肥事（以 snippet 头部 #!author 为准）
+#   该仓库未声明 LICENSE，版权归原作者；本插件仅做 QuantumultX → Loon 语法转换，
+#   脚本镜像至本仓库 scripts/qx/ 以便国内直连。原作者有异议即行撤下。
+#   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
+# ==========================================================================
+
+# URL 重写（来自 QX url reject-* / jsonjq-response-body）
+[Rewrite]
+request if ${url} ~= /^https?:\/\/api-htp\.beizi\.biz\/mb\/sdk0\/json(?:\?|$)/ then reject(200)
+request if ${url} ~= /^https?:\/\/adservice\.sigmob\.cn\/(?:hb\/v2\/ad|ad\/v4)(?:\?|$)/ then reject(200)
+request if ${url} ~= /^https?:\/\/tm\.sigmob\.cn\/(?:waterfall\/v1|strategy\/v6)(?:\?|$)/ then reject(200)
+request if ${url} ~= /^https?:\/\/(?:mi|v2mi)\.gdt\.qq\.com\/(?:gdt_mview\.fcg|server_bidding2)(?:\?|$)/ then reject(200)
+
+# 脚本处理（来自 QX url script-*，JS 已镜像至本仓库 scripts/qx/）
+[Script]
+response if ${url} ~= /^https:\/\/resource\.51downapp\.cn\/f414fbc17c411b4e986ba8891c738a49\.json\?(?:[^#]*&)?md5=e5230c919f7e3f3af3256161fbfaa0e2&(?:[^#]*&)?hbe_qx_ui=1\.3$/ then script("https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/easybike-ad.js") with requires_body=true
+response if ${url} ~= /^https:\/\/api\.hellobike\.com(?::443)?\/secretkey(?:\?|$)/ then script("https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/easybike-ad.js") with requires_body=true
+request if ${url} ~= /^https?:\/\/(?:api|marketingapi|entertainment)\.hellobike\.com(?::\d+)?\/api(?:\?|$)/ then script("https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/easybike-ad.js") with requires_body=true
+response if ${url} ~= /^https?:\/\/(?:api|marketingapi|entertainment)\.hellobike\.com(?::\d+)?\/api(?:\?|$)/ then script("https://raw.githubusercontent.com/ZenmoFeiShi/Qx/main/easybike-ad.js") with requires_body=true
+
+[Mitm]
+hostname = api.hellobike.com, marketingapi.hellobike.com, entertainment.hellobike.com, api-htp.beizi.biz, adservice.sigmob.cn, tm.sigmob.cn, mi.gdt.qq.com, v2mi.gdt.qq.com, resource.51downapp.cn
+

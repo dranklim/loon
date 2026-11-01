@@ -1,0 +1,61 @@
+#!name = 拼多多 去广告（QX 迁移）
+#!desc = 由 ZenmoFeiShi/Qx 的 Pinduoduo.snippet 转换为 Loon Rewrite/Script v2 语法（9 条规则 + 23 条重写 + 0 条脚本）
+#!author = dranklim（转换）
+#!homepage = https://github.com/dranklim/loon
+#!icon = https://cdn.jsdelivr.net/gh/dranklim/loon@main/assets/pinduoduo.png
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(983)
+#!tag = QX迁移,去广告
+#!type = normal
+
+# ==========================================================================
+# 来源声明 / Attribution
+#   规则与脚本源自开源项目 ZenmoFeiShi/Qx 的 Pinduoduo.snippet
+#   https://github.com/ZenmoFeiShi/Qx/blob/main/Pinduoduo.snippet
+#   原作者：TG@ZenMoFiShi / 怎么肥事（以 snippet 头部 #!author 为准）
+#   该仓库未声明 LICENSE，版权归原作者；本插件仅做 QuantumultX → Loon 语法转换，
+#   脚本镜像至本仓库 scripts/qx/ 以便国内直连。原作者有异议即行撤下。
+#   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
+# ==========================================================================
+
+# 域名 / IP 层拦截（来自 QX host / ip-cidr 规则）
+[Rule]
+DOMAIN,sdk.1rtb.net,REJECT
+DOMAIN,titan.pinduoduo.com,REJECT
+IP-CIDR,121.5.84.85/32,REJECT
+IP-CIDR,183.194.214.21/32,REJECT
+IP-CIDR,49.235.102.190/32,REJECT
+IP-CIDR,81.69.116.33/32,REJECT
+IP-CIDR,183.194.214.20/32,REJECT
+IP-CIDR,117.185.244.145/32,REJECT
+IP-CIDR,183.194.214.14/32,REJECT
+
+# URL 重写（来自 QX url reject-* / jsonjq-response-body）
+[Rewrite]
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/engels\/wait\/receive\/review/ then reject_dict(200)
+response if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/alexa\/homepage\/hub/ then response.json.jq(`del(.result.icon_set, .result.search_bar_hot_query, .result.dy_module.irregular_banner_dy,.result.dy_module.recommend_fresh_info) | if .result.bottom_tabs then .result.bottom_tabs |= map(select(.link == "index.html" or .link == "chat_list.html" or .link == "personal.html")) else . end`)
+response if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/search/ then response.json.delete("expansion")
+response if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/philo\/personal\/hub/ then response.json.jq(`del(.monthly_card_entrance, .personal_center_style_v2_vo, .icon_set.icons, .icon_set.top_personal_icons)`)
+response if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/oak\/integration\/render/ then response.json.jq(`del(.bottom_section_list, .ui.bottom_section, .ui.live_section.float_info)`)
+response if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/order_detail_group/ then response.json.delete("data.goods_list")
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/aristotle\/unrated_order_for_unreceived_tab/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/aristotle\/query_order_list_tabs_element/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/aquarius\/hungary\/global\/homepage\?/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/order_express_group/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/search_hotquery/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/zaire_biz\/chat\/resource\/get_list_data/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/new_chat_group/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/alexa\/goods\/back_up/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/personal/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/brand-olay\/goods_detail\/bybt_guide/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/engels\/reviews\/require\/append/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/my_order_group/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/likes/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/phantom\/gbdbpdv\/extra/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/manufacturer\/cross\/shortcut\/list/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/dunkirk\/liveactivity\/push\/create\/url\/report/ then reject_dict(200)
+request if ${url} ~= /^https:\/\/api\.pinduoduo\.com\/api\/growth\/nagato\/app\/index\/gather/ then reject_dict(200)
+
+[Mitm]
+hostname = api.pinduoduo.com
+
