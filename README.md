@@ -50,7 +50,7 @@
 | **菜鸟裹裹净化** | 2 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FCwkj.lpx) |
 | **滴滴出行净化** | 16 规则 + 24 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FDidichuxing.lpx) |
 | **Keep净化** | 2 规则 + 9 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FKeep.lpx) |
-| **酷安净化** | 6 重写 + **1 开关** | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FKuAn.lpx) |
+| **酷安净化** | 1 规则 + 6 重写 + **1 开关**（含开屏） | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FKuAn.lpx) |
 | **美团净化** | 46 规则 + 2 重写 + 8 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FMT.lpx) |
 | **拼多多净化** | 9 规则 + 23 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FPinduoduo.lpx) |
 | **顺丰速运净化** | 4 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FSF.lpx) |
