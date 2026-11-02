@@ -183,7 +183,7 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 > 📥 **导入链接见上方 [🚀 全部插件快捷链接](#-全部插件快捷链接)**，本章节只说明转换细节与注意事项。
 
-转换器：`qx2loon.py`（通用、可重跑），覆盖 16 种 QX 语法。该脚本**只在本机维护、未纳入本仓库**；本地增强规则（如 KuAn 开屏清除）写在其 `PLUGIN_JQ_AUGMENTS` 表里，以追加方式叠加在上游 jq 之后，构建期失配会以非零退出码拦住。
+转换器：[`scripts/qx2loon.py`](https://github.com/dranklim/loon/blob/main/scripts/qx2loon.py)（通用、可重跑），覆盖 16 种 QX 语法。本地增强规则（如 KuAn 开屏清除）写在其 `PLUGIN_JQ_AUGMENTS` 表里，以**追加**方式叠加在上游 jq 之后。
 
 ### 需要知道的三件事
 
@@ -196,9 +196,14 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 3. **上游有变化会自动通知**：cron 任务 `qx-suite-sync` 每日比对上游全部 snippet + js 的 sha256，有新增/修改/删除会推送清单。同步命令：
    ```bash
-   python3 qx2loon.py --fetch     # 拉取最新 snippet + js
-   python3 qx2loon.py --build     # 重新生成 lpx
+   python3 qx2loon.py --fetch     # 拉取最新 snippet + js（无条件重下，不需要先删缓存）
+   python3 qx2loon.py --build     # 重新生成 lpx + 内置可用性校验
    ```
+
+   `--build` 结尾会打印**与已发布版本的差异**（已修改 / 新增 / 消失 / 条目减少），并做可用性校验。
+   **退出码 1 表示不能发布**：本地增强指纹缺失（上游改了接口路径或删了规则）、jq 语法错误、
+   空插件、`[Mitm]` hostname 为空、URL 正则编译失败。这几种情况生成物看起来完全正常，
+   只能靠校验拦住。
 
 4. **`KuAn` 带开屏增强，必须走转换器**：上游 snippet 只做信息流，一条开屏规则都没有。酷安开屏不是第三方 SDK 素材，而是 `/v6/main/init` 里「首页」配置卡 `entityId=6390` 的 `SplashAd.*` 下发的服务端开关（实测 `SplashAd.Type = GM_SPLASH | 5156243 | 102140761` 广点通、`Expires = 900` 即 **15 分钟** —— 这就是「划掉后台过一会重开又弹」的真正原因，`Ad.SPLASH_RETRY_PERIOD = 300` 是另一个重试周期）。
    增强写在 `qx2loon.py` 的 `PLUGIN_JQ_AUGMENTS` 表里，以**追加**方式拼到上游 jq 末尾（不改上游逻辑）。**不要手改生成的 `.lpx`** —— 下一次 `--build` 会整条覆盖，而且覆盖是静默的，生成物看起来完全正常，只是增强没了。
