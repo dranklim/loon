@@ -1,5 +1,5 @@
 #!name = 酷安净化
-#!desc = 由 ZenmoFeiShi/Qx 的 KuAn.snippet 转换为 Loon Rewrite/Script v2 语法，并在其上新增开屏广告清除（删 init 的 imageCard + 改写配置卡 6390 的 SplashAd.*）
+#!desc = 由 ZenmoFeiShi/Qx 的 KuAn.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 6 条重写 + 0 条脚本）
 #!author = dranklim（转换）
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/coolapk.png
@@ -18,34 +18,29 @@
 #   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
 # ==========================================================================
 
+# ==========================================================================
+# ★ 开屏广告清除（本仓库增强，上游 snippet 没有）
+#   实测依据：2026-11-01 真机冷启动抓包，酷安 16.7.1（x-app-code 2610291）。
+#   /v6/main/init 的 data 只有 configCard，没有 imageCard；开屏由「首页」配置卡
+#   entityId=6390 的 extraDataArr 下发，实测值：
+#     SplashAd.Type = "GM_SPLASH | 5156243 | 102140761"（广点通开屏）
+#     SplashAd.Expires = 900   ← 15 分钟，这就是「划掉后台过一会重开又弹」的根源
+#     Ad.SPLASH_RETRY_PERIOD = 300 / onResume=1 / resumeExpires=60 / timeout=4000
+#   → 所有 SplashAd.* 类型清空、超时归零、周期拉满、onResume 关掉、关预加载；
+#     imageCard 一并删（本版没有，兼容其他版本与安卓端）
+#   → 规则正则放宽到 api\d* 并补 Mitm api2（部分接口走 api2）
+# ==========================================================================
+
 # 参数开关（Loon 界面自动生成，默认值见下）
 # 关掉 = 对应规则不执行，接口恢复原样
 [Argument]
 fakeProfile = switch,false,tag=伪造个人资料,desc=把等级改20/粉丝99999/经验94575543，与去广告无关，默认关闭
 
-# 阻断酷安自营广告资源域名（开屏图/广告素材）
-[Rule]
-DOMAIN,ad.api.coolapk.com,REJECT
-
 # URL 重写（来自 QX url reject-* / jsonjq-response-body）
 [Rewrite]
 response if ${fakeProfile} == true && ${url} ~= /^https:\/\/api\d*\.coolapk\.com\/v6\/user\/profile/ then response.json.jq(`.data.level = 20 | .data.fans = 99999 | .data.experience = 94575543 | .data.next_level_experience = 200000000`)
 request if ${url} ~= /^https:\/\/api\d*\.coolapk\.com\/v6\/search\?.*type=hotSearch/ then reject_dict(200)
-# ★ 开屏广告（本次新增，上游 snippet 完全没有）
-#   实测依据：2026-11-01 真机冷启动抓包，酷安 16.7.1（x-app-code 2610291）。
-#   /v6/main/init 的 data 只有 4 张 configCard（首页/数码/发现/我的），没有 imageCard；
-#   开屏完全由「首页」配置卡 entityId=6390 的 extraDataArr 下发，实测值：
-#     SplashAd.Type        = "GM_SPLASH | 5156243 | 102140761"   广点通开屏，广告位 102140761
-#     SplashAd.hType       = "GM_SPLASH | 5156243 | 103293853"
-#     SplashAd.Expires     = 900           ← 15 分钟，这就是「划掉后台过一会重开又弹」的根源
-#     SplashAd.onResume    = 1             ← 允许切回前台再弹
-#     SplashAd.resumeType  = "GM_SPLASH | 5156243 | 102140761"
-#     SplashAd.resumeExpires = "60"
-#     SplashAd.timeout     = "4000"        ← 等 4 秒广告
-#     Ad.SPLASH_RETRY_PERIOD = "300"       ← 5 分钟重试
-#   → 处理：所有 SplashAd.* 类型清空、超时归零、两个 Expires 和重试周期拉满、onResume 关掉，
-#     并关掉 Ad.PRELOAD / Ad.SPLASH_DOWNLOAD_POPUP。imageCard 一并删（本版本没有，兼容其他版本/安卓端）。
-response if ${url} ~= /^https:\/\/api\d*\.coolapk\.com\/v6\/main\/init/ then response.json.jq(`del(.data[]? | select(.entityId == 944 or .entityId == 945 or .entityId == 24455 or .entityId == 36839 or .entityId == 1635 or .title == "关注" or .entityTemplate == "imageCard")) | .data |= map(if (.entityId|tostring) == "6390" and .extraDataArr != null then (.extraDataArr["SplashAd.Type"] = "") | (.extraDataArr["SplashAd.hType"] = "") | (.extraDataArr["SplashAd.resumeType"] = "") | (.extraDataArr["SplashAd.timeout"] = "0") | (.extraDataArr["SplashAd.Expires"] = "2147483647") | (.extraDataArr["SplashAd.resumeExpires"] = "2147483647") | (.extraDataArr["SplashAd.onResume"] = "0") | (.extraDataArr["Ad.SPLASH_RETRY_PERIOD"] = "2147483647") | (.extraDataArr["Ad.PRELOAD"] = "0") | (.extraDataArr["Ad.SPLASH_DOWNLOAD_POPUP"] = "0") else . end) | .data |= map(if .entities then .entities |= map(select(.entityId != 1635 and .entityId != 2261 and .entityId != 1633 and .entityId != 413 and .entityId != 417 and .entityId != 1754 and .entityId != 1966 and .entityId != 2274 and .entityId != 1170 and .entityId != 1175 and .entityId != 1190 and .entityId != 2258 and .title != "关注")) else . end)`)
+response if ${url} ~= /^https:\/\/api\d*\.coolapk\.com\/v6\/main\/init/ then response.json.jq(`del(.data[]? | select(.entityId == 944 or .entityId == 945 or .entityId == 24455 or .entityId == 36839 or .entityId == 1635 or .title == "关注")) | .data |= map(if .entities then .entities |= map(select(.entityId != 1635 and .entityId != 2261 and .entityId != 1633 and .entityId != 413 and .entityId != 417 and .entityId != 1754 and .entityId != 1966 and .entityId != 2274 and .entityId != 1170 and .entityId != 1175 and .entityId != 1190 and .entityId != 2258 and .title != "关注")) else . end) | .data |= map(select(.entityTemplate != "imageCard")) | .data |= map(if (.entityId|tostring) == "6390" and .extraDataArr != null then (.extraDataArr["SplashAd.Type"] = "") | (.extraDataArr["SplashAd.hType"] = "") | (.extraDataArr["SplashAd.resumeType"] = "") | (.extraDataArr["SplashAd.timeout"] = "0") | (.extraDataArr["SplashAd.Expires"] = "2147483647") | (.extraDataArr["SplashAd.resumeExpires"] = "2147483647") | (.extraDataArr["SplashAd.onResume"] = "0") | (.extraDataArr["Ad.SPLASH_RETRY_PERIOD"] = "2147483647") | (.extraDataArr["Ad.PRELOAD"] = "0") | (.extraDataArr["Ad.SPLASH_DOWNLOAD_POPUP"] = "0") else . end)`)
 response if ${url} ~= /^https:\/\/api\d*\.coolapk\.com\/v6\/main\/indexV8/ then response.json.jq(`.data |= map(select((.entityId != 32557 and .entityId != 29349 and .entityId != 28621) and (.title | test("值得买|红包") | not)))`)
 response if ${url} ~= /^https:\/\/api\d*\.coolapk\.com\/v6\/page\/dataList/ then response.json.jq(`.data |= map(select(.title != "话题热议" and (.entityId != 36104 and .entityId != 24309 and .entityId != 12889 and .entityId != 21063 and .entityId != 35730 and .entityId != 35846 and .entityId != 28374 and .entityId != 28375 and .entityId != 27332 and .entityId != 20090 and .entityId != 28773 and .entityId != 29343 and .entityId != 21106)) | if .entities then (.entities |= map(select(.title != "睡个好觉需要什么？"))) else . end)`)
 response if ${url} ~= /^https:\/\/api\d*\.coolapk\.com\/v6\/account\/loadConfig\?key=my_page_card_config/ then response.json.jq(`.data |= map(select(.entityType != "textLink" and (.entityId != 1001 and .entityId != 1003 and .entityId != 1004 and .entityId != 1005)) | if .entities then .entities |= map(select(.entityType != "textLink")) else . end)`)

@@ -41,7 +41,7 @@
 | **风控上报 IP 拦截 (IP Rewrite)** | 1 条 IP Rewrite | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FRiskBlock_IPRewrite.lpx) |
 | **SkipProxy防检测** | 11 规则 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FSkipProxy_anti_detect.lpx) |
 
-### QX 迁移套件（26 个）
+### QX 迁移套件（27 个）
 
 由 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 的 QuantumultX snippet 批量转换为 Loon Rewrite/Script v2 语法，来源与许可说明见文末 QX 迁移套件章节。
 
@@ -61,6 +61,7 @@
 | **途虎养车净化** | 7 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTH.lpx) |
 | **TilingSales净化** | 17 重写 + 6 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTilingSales_ad_remove.lpx) |
 | **腾讯视频净化** | 2 规则 + 5 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTxvideoAD.lpx) |
+| **腾讯体育净化** | 7 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Ftxsports-ad-clean.lpx) |
 | **微博净化** | 5 规则 + 25 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FWB.lpx) |
 | **微信净化** | 32 重写 + 2 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FWxPureDominion.lpx) |
 | **YouTube净化** | 5 重写 + 1 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FYoutube.lpx) |
@@ -178,7 +179,7 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 ## 📦 QX 迁移套件（plugins/qx/）
 
-把 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 仓库的**全部 QuantumultX snippet** 批量转换为 Loon 插件，共 **26 个**（虎扑因为另有手写增强版 `HP_Clean.lpx`，未重复收录）。
+把 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 仓库的**全部 QuantumultX snippet** 批量转换为 Loon 插件，共 **27 个**（虎扑因为另有手写增强版 `HP_Clean.lpx`，未重复收录）。
 
 > 📥 **导入链接见上方 [🚀 全部插件快捷链接](#-全部插件快捷链接)**，本章节只说明转换细节与注意事项。
 
@@ -187,7 +188,7 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 ### 需要知道的三件事
 
 1. **脚本来源分两类**
-   - 12 个被引用的 JS 镜像在本仓库 `scripts/qx/`，经 raw 地址分发
+   - 13 个被引用的 JS 镜像在本仓库 `scripts/qx/`，经 raw 地址分发
    - `migu_vip.js`（含上游 API token）和 `easybike-ad.js`（含作者邮箱）**不镜像**，插件直接引用上游 raw 地址 —— 不把他人有效凭据扩散到另一个公开仓库
    - 另有 `PingMe.js` / `WeTalk.js` 含作者 SECRET 且未被任何插件引用，完全未收录
 
@@ -198,6 +199,9 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
    python3 qx2loon.py --fetch     # 拉取最新 snippet + js
    python3 qx2loon.py --build     # 重新生成 lpx
    ```
+
+4. **`KuAn` 带开屏增强，必须走转换器**：上游 snippet 只做信息流，一条开屏规则都没有。酷安开屏不是第三方 SDK 素材，而是 `/v6/main/init` 里「首页」配置卡 `entityId=6390` 的 `SplashAd.*` 下发的服务端开关（实测 `SplashAd.Type = GM_SPLASH | 5156243 | 102140761` 广点通、`Expires = 900` 即 **15 分钟** —— 这就是「划掉后台过一会重开又弹」的真正原因，`Ad.SPLASH_RETRY_PERIOD = 300` 是另一个重试周期）。
+   增强写在 `qx2loon.py` 的 `PLUGIN_JQ_AUGMENTS` 表里，以**追加**方式拼到上游 jq 末尾（不改上游逻辑）。**不要手改生成的 `.lpx`** —— 下一次 `--build` 会整条覆盖，而且覆盖是静默的，生成物看起来完全正常，只是增强没了。
 
 ### 来源与许可
 
