@@ -1,6 +1,6 @@
 #!name = 咪咕视频
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：会员播放源解锁
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/migu.png
 #!system = iOS,iPadOS

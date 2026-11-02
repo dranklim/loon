@@ -1,6 +1,6 @@
 #!name = 百度贴吧净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：广告域名、搜索发现与直播 feed 推广
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/tieba.png
 #!system = iOS,iPadOS

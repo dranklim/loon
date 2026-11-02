@@ -1,6 +1,6 @@
 #!name = Soul净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：广场推荐、聊天引导与开屏运营位
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/soul.png
 #!system = iOS,iPadOS

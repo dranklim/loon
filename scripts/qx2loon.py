@@ -579,7 +579,9 @@ def render_plugin(name, qx_text, js_files):
         warns.append(f"插件 {name} 未在 ADS 表登记「去除内容」，desc 会退化成占位文本")
     # 描述讲「去掉了哪些广告」，不提源格式与转换过程
     out.append(f"#!desc = 参考 ZenmoFeiShi 的去广告脚本：{ads_short}")
-    out.append("#!author = dranklim, ZenmoFeiShi")
+    # 多作者用逗号紧接，不能有空格：Loon 会把 "@ " 后的前导空格算进作者名，
+    # 显示成 "@ ZenmoFeiShi"（别的单作者插件不会出现这个问题，容易看不出是格式错的）
+    out.append("#!author = dranklim,ZenmoFeiShi")
     out.append("#!homepage = https://github.com/dranklim/loon")
     if icon:
         out.append(f"#!icon = {ICON_BASE}/{icon}.png")

@@ -1,6 +1,6 @@
 #!name = 腾讯体育净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：开屏、首页广告与底部会员 tab
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/txsports.png
 #!system = iOS,iPadOS

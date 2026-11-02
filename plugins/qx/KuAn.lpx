@@ -1,6 +1,6 @@
 #!name = 酷安净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：开屏、信息流与搜索热搜
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/coolapk.png
 #!system = iOS,iPadOS

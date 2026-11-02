@@ -1,6 +1,6 @@
 #!name = 微信净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：小程序内的营销弹窗与会员推广
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/wechat.png
 #!system = iOS,iPadOS

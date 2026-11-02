@@ -1,6 +1,6 @@
 #!name = 微博净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：信息流广告、搜索推广与推送运营
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/weibo.png
 #!system = iOS,iPadOS

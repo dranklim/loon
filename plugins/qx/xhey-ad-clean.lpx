@@ -1,6 +1,6 @@
 #!name = 小红书净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：开屏、第三方广告 SDK 与竞价请求
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/xiaohongshu.png
 #!system = iOS,iPadOS

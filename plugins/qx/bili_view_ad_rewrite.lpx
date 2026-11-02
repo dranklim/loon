@@ -1,6 +1,6 @@
 #!name = 哔哩哔哩净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：开屏、播放器广告、搜索热词与动态推广
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/bilibili.png
 #!system = iOS,iPadOS

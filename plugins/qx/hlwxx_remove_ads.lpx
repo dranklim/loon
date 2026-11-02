@@ -1,6 +1,6 @@
 #!name = 黑料网净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：网页浮窗、弹窗广告与统计上报
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/hlwxx.png
 #!system = iOS,iPadOS

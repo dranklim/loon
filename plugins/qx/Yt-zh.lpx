@@ -1,6 +1,6 @@
 #!name = YouTube字幕
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：字幕接口解锁
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/youtube.png
 #!system = iOS,iPadOS

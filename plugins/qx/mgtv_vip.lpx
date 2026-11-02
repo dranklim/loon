@@ -1,6 +1,6 @@
 #!name = 芒果TV
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：会员视频源解锁
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/mgtv.png
 #!system = iOS,iPadOS

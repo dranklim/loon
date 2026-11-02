@@ -1,6 +1,6 @@
 #!name = 字幕解锁
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：字幕任务会员校验解除
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/xzimu.png
 #!system = iOS,iPadOS

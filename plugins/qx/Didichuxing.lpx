@@ -1,6 +1,6 @@
 #!name = 滴滴出行净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：活动弹窗、信息流与广告追踪域名
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/didi.png
 #!system = iOS,iPadOS

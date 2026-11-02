@@ -1,6 +1,6 @@
 #!name = 菜鸟裹裹净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：内嵌游戏中心的等级与 VIP 标识
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/cainiao.png
 #!system = iOS,iPadOS

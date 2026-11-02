@@ -1,6 +1,6 @@
 #!name = 虎扑净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：图库入口、未读红点、热门标签与排行榜、搜索热搜、插屏广告、比分 Tab 横幅、首页轮播、预览页横幅、论坛冗余入口、用户页 VIP 卡片
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/hupu.png
 #!system = iOS,iPadOS

@@ -1,6 +1,6 @@
 #!name = Keep净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：广告接口与搜索热词
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/keep.png
 #!system = iOS,iPadOS

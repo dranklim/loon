@@ -1,6 +1,6 @@
 #!name = TilingSales净化
 #!desc = 参考 ZenmoFeiShi 的去广告脚本：开屏、浮窗、插屏与横幅广告
-#!author = dranklim, ZenmoFeiShi
+#!author = dranklim,ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/tilingsales.png
 #!system = iOS,iPadOS
