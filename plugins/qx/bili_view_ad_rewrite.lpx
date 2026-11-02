@@ -1,6 +1,6 @@
 #!name = 哔哩哔哩净化
-#!desc = 由 ZenmoFeiShi/Qx 的 bili_view_ad_rewrite.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 5 条重写 + 5 条脚本）
-#!author = dranklim（转换）
+#!desc = 参考 ZenmoFeiShi 的去广告脚本：开屏、播放器广告、搜索热词与动态推广
+#!author = dranklim, ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/bilibili.png
 #!system = iOS,iPadOS
@@ -9,13 +9,20 @@
 #!type = normal
 
 # ==========================================================================
+# 本插件去除的内容
+#   · 开屏与播放页广告（View/View、PlayViewUnite）
+#   · 搜索默认词与热词推荐（Search/DefaultWords）
+#   · 热门页与动态页推广卡片（Popular/Index、DynAll）
+#   · 广告转化与投放统计（cm.bilibili.com）
+# ==========================================================================
+
+# ==========================================================================
 # 来源声明 / Attribution
-#   规则与脚本源自开源项目 ZenmoFeiShi/Qx 的 bili_view_ad_rewrite.snippet
+#   去广告思路与规则参考开源项目 ZenmoFeiShi/Qx 的 bili_view_ad_rewrite.snippet
 #   https://github.com/ZenmoFeiShi/Qx/blob/main/bili_view_ad_rewrite.snippet
-#   原作者：TG@ZenMoFiShi / 怎么肥事（以 snippet 头部 #!author 为准）
-#   该仓库未声明 LICENSE，版权归原作者；本插件仅做 QuantumultX → Loon 语法转换，
-#   脚本镜像至本仓库 scripts/qx/ 以便国内直连。原作者有异议即行撤下。
-#   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
+#   原作者：TG@ZenMoFiShi、怎么肥事、walala（以 snippet 头部 #!author 为准）
+#   上游未声明 LICENSE，版权归原作者所有；原作者有异议即行撤下。
+#   同步：cron 任务 qx-suite-sync 每日比对上游构建日期与脚本 sha256
 # ==========================================================================
 
 # URL 重写（来自 QX url reject-* / jsonjq-response-body）

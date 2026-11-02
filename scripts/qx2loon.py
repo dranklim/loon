@@ -172,7 +172,130 @@ META = {
     "migu_vip_share":       ("咪咕视频", "migu", None),
     "xTerm256":             ("iTunes 净化", "xterm256", None),
     "xhey-ad-clean":        ("小红书", "xiaohongshu", None),
-    "xzimu-unlock":         ("字幕解锁", "xzimu", None),
+    "xzimu-unlock":          ("字幕解锁", "xzimu", None),
+}
+
+# 每个插件实际去掉的内容 —— 写进 #!desc 和插件内的「去除内容」块。
+# 使用者关心的是「去掉了哪些广告」，不是「源文件是什么格式、转了几条语法」，
+# 所以描述里不出现 QX / 转换 / 语法 这类字眼。
+# 结构：{插件名: (desc 用的短句, [配置块内逐条展开的内容])}
+ADS = {
+    "Cwkj": ("内嵌游戏中心的等级与 VIP 标识",
+             ["菜鸟裹裹内嵌游戏中心（play.wo1wan.com）的等级与 VIP 字段改为满级"]),
+    "Didichuxing": ("活动弹窗、信息流与广告追踪域名",
+                    ["活动弹窗与运营位（resapi/activity）",
+                     "首页信息流推广（ct/agent/v3/feeds）",
+                     "广告追踪域名（gwp.xiaojukeji.com）与上报 IP 段"]),
+    "HP": ("开屏与信息流广告",
+           ["广告接口（goblin.hupu.com/interfaceAd）",
+            "首页 / 画廊推荐模块（getmod2）",
+            "板块列表、评论与搜索中的推广位"]),
+    "Keep": ("广告接口与搜索热词",
+             ["广告请求（op-engine-webapp/v1/ad、kad.gotokeep.com）",
+              "搜索热词、热门课程与话题推荐",
+              "消息中心里的推广会话"]),
+    "KuAn": ("开屏、信息流与搜索热搜",
+             ["启动开屏广告（SplashAd 全套开关：类型、超时、重试周期、切回前台）",
+              "首页与列表信息流广告卡片",
+              "搜索页热搜推荐词",
+              "「伪造个人资料」为独立开关，默认关闭"]),
+    "MT": ("广告追踪域名与上报地址",
+           ["广告与埋点域名（shark-*.meituan.com / shark-*.sankuai.com / shark.dianping.com）",
+            "HTTPDNS 多活解析接口",
+            "广告上报 IP 段与 QUIC 变体域名"]),
+    "Pinduoduo": ("首页推荐、搜索推广与活动弹窗",
+                  ["首页推荐位与广告插槽（alexa/homepage）",
+                   "搜索结果中的推广商品",
+                   "个人中心营销模块",
+                   "活动弹窗与运营下发（caterham / oak / engels）"]),
+    "SF": ("信息流广告、推荐与积分商城商品",
+           ["信息流广告（base/app/ad/queryInfoFlow）",
+            "推荐内容（bms/queryRecommend）",
+            "视频页推荐标签、积分商城商品推荐"]),
+    "Smzdm": ("开屏 loading、横幅广告与推荐模块",
+              ["开屏 loading 数据（util/loading）",
+               "首页横幅与挂件广告（banner_v2 / widget）",
+               "好价列表中的广告行",
+               "详情页第三方与百科相关推荐模块"]),
+    "Soul": ("广场推荐、聊天引导与开屏运营位",
+             ["广场推荐与广告位（ssp/api/q）",
+              "聊天页快捷菜单、引导语与入口推荐",
+              "直播星球推荐列表",
+              "开屏与活动运营配置"]),
+    "T3": ("活动弹窗与广告位",
+           ["广告接口（passenger-activity-api/api/ad）",
+            "实时弹窗与运营位（open-app-api/api/intime）",
+            "活动中心推广与无 token 接口下发"]),
+    "TB": ("广告域名、搜索发现与直播 feed 推广",
+           ["百度广告域名（afd / mobads.baidu.com）",
+            "搜索发现与吧引导推荐（search/discover、forumGuide）",
+            "直播 feed 中的横幅与侧栏推广",
+            "聊天页订阅推广"]),
+    "TH": ("营销弹窗、横幅、超级会员与搜索热词",
+           ["营销弹窗与活动方案（mkt-scene-marketing-service）",
+            "首页 banner 与门店 Tab 横幅",
+            "超级会员推广配置（getAutoSuperConfig）",
+            "圈子推荐、搜索热词与商品推荐位"]),
+    "TilingSales_ad_remove": ("开屏、浮窗、插屏与横幅广告",
+                              ["开屏广告（App/Ad/splashInfo）",
+                               "首页浮窗与横幅（homeFloatAd / bannerInfo）",
+                               "插屏与短剧广告（skitAdInfo）",
+                               "弹窗计数、公告位与广告配置下发"]),
+    "TxvideoAD": ("广告 SDK 配置编排",
+                  ["广告 SDK 配置接口（rdelivery.qq.com/v1/sdkconfig），"
+                   "阻断后客户端拿不到广告编排",
+                   "会员入口与会员专区模块（vip_entrance）"]),
+    "txsports-ad-clean": ("开屏、首页广告与底部会员 tab",
+                          ["开屏广告编排（app.sports.qq.com/init/config）",
+                           "首页推荐位与广告（homePageV2）",
+                           "广告 SDK 配置（k.ssp.qq.com/getsdkconfig）",
+                           "底部会员 tab 与首页展示优化"]),
+    "WB": ("信息流广告、搜索推广与推送运营",
+           ["信息流广告卡片（container_detail / container_timeline）",
+            "搜索页推广内容（search/container_timeline）",
+            "推送运营消息（push/active）",
+            "个人资料页与未读容器中的推广位"]),
+    "WxPureDominion": ("小程序内的营销弹窗与会员推广",
+                       ["小桔充电小程序的活动页、资源位与会员推广",
+                        "云快充城市配置与企业微信配置推广",
+                        "同程（wx.17u.cn）首页聚合推荐与 banner",
+                        "各小程序营销弹窗与跳转引导"]),
+    "Youtube": ("视频广告、首页 Shorts 与内嵌推荐卡",
+                ["视频前贴片与中插广告（googlevideo / oad）",
+                 "广告统计上报（stats/ads、pagead、qoe）",
+                 "首页 Shorts 区块",
+                 "播放页内嵌的购物与商品推荐卡"]),
+    "Yt-zh": ("字幕接口解锁",
+              ["解锁 YouTube 字幕接口（timedtext）的中文字幕请求"]),
+    "bili_view_ad_rewrite": ("开屏、播放器广告、搜索热词与动态推广",
+                             ["开屏与播放页广告（View/View、PlayViewUnite）",
+                              "搜索默认词与热词推荐（Search/DefaultWords）",
+                              "热门页与动态页推广卡片（Popular/Index、DynAll）",
+                              "广告转化与投放统计（cm.bilibili.com）"]),
+    "helloobike": ("开屏素材配置与广告密钥",
+                   ["开屏广告素材配置 JSON（resource.51downapp.cn）",
+                    "广告密钥下发接口（api.hellobike.com/secretkey）"]),
+    "hlwxx_remove_ads": ("网页浮窗、弹窗广告与统计上报",
+                         ["页面浮窗广告脚本（adfloat.js）",
+                          "底部广告轮询脚本（bottom_ad_poll.js）",
+                          "弹窗 feed 数据（popup-feed.json）",
+                          "广告统计与事件上报域名"]),
+    "mgtv_vip": ("会员视频源解锁",
+                 ["解锁会员视频源（mobile-stream.api.mgtv.com/v1/video/source）"]),
+    "migu_vip_share": ("会员播放源解锁",
+                       ["解锁会员播放源（*.miguvideo.com 播放接口）",
+                        "修正 passport / 推送等接口的请求头"]),
+    "xTerm256": ("内购收据校验拦截",
+                 ["拦截 iTunes 收据校验（verifyReceipt），使应用按已购买处理"]),
+    "xhey-ad-clean": ("开屏、第三方广告 SDK 与竞价请求",
+                      ["开屏与推广广告（ad.xhey.top/next）",
+                       "今日水印相机的全局广告开关（abtest 下发）",
+                       "TopOn / AnyThink 广告 SDK（anythinktech、toponadss）",
+                       "百度 mobads、快手广告（open.e.kuaishou）",
+                       "第三方 ADX 竞价（1rtb、statisticslinks）"]),
+    "xzimu-unlock": ("字幕任务会员校验解除",
+                     ["解除字幕识别任务的会员状态校验（updateStatus）",
+                      "绕过任务离线限制与分段识别接口鉴权"]),
 }
 
 # 含上游作者的有效凭据 / 联系方式，不镜像到本仓库（避免扩散），改为直接引用上游地址。
@@ -451,9 +574,12 @@ def render_plugin(name, qx_text, js_files):
         out.append(f"#!name = {cn_disp}")   # 名字已含净化/解锁/字幕，不重复追加
     else:
         out.append(f"#!name = {cn_disp}净化")
-    out.append(f"#!desc = 由 ZenmoFeiShi/Qx 的 {name}.snippet 转换为 Loon Rewrite/Script v2 语法"
-               f"（{len(rule_lines)} 条规则 + {len(rw_lines)} 条重写 + {len(sc_lines)} 条脚本）")
-    out.append("#!author = dranklim（转换）")
+    ads_short, ads_items = ADS.get(name, ("上游规则涉及的广告与推广位", []))
+    if name not in ADS:
+        warns.append(f"插件 {name} 未在 ADS 表登记「去除内容」，desc 会退化成占位文本")
+    # 描述讲「去掉了哪些广告」，不提源格式与转换过程
+    out.append(f"#!desc = 参考 ZenmoFeiShi 的去广告脚本：{ads_short}")
+    out.append("#!author = dranklim, ZenmoFeiShi")
     out.append("#!homepage = https://github.com/dranklim/loon")
     if icon:
         out.append(f"#!icon = {ICON_BASE}/{icon}.png")
@@ -462,14 +588,20 @@ def render_plugin(name, qx_text, js_files):
     out.append("#!tag = 去广告,净化")
     out.append("#!type = normal")
     out.append("")
+    # 使用者先看到「去掉了什么」，署名放在后面；通篇不提「转换」
+    out.append("# " + "=" * 74)
+    out.append("# 本插件去除的内容")
+    for item in ads_items:
+        out.append(f"#   · {item}")
+    out.append("# " + "=" * 74)
+    out.append("")
     out.append("# " + "=" * 74)
     out.append("# 来源声明 / Attribution")
-    out.append(f"#   规则与脚本源自开源项目 ZenmoFeiShi/Qx 的 {name}.snippet")
+    out.append(f"#   去广告思路与规则参考开源项目 ZenmoFeiShi/Qx 的 {name}.snippet")
     out.append(f"#   https://github.com/{REPO}/blob/{BRANCH}/{name}.snippet")
-    out.append("#   原作者：TG@ZenMoFiShi / 怎么肥事（以 snippet 头部 #!author 为准）")
-    out.append("#   该仓库未声明 LICENSE，版权归原作者；本插件仅做 QuantumultX → Loon 语法转换，")
-    out.append("#   脚本镜像至本仓库 scripts/qx/ 以便国内直连。原作者有异议即行撤下。")
-    out.append("#   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256")
+    out.append("#   原作者：TG@ZenMoFiShi、怎么肥事、walala（以 snippet 头部 #!author 为准）")
+    out.append("#   上游未声明 LICENSE，版权归原作者所有；原作者有异议即行撤下。")
+    out.append("#   同步：cron 任务 qx-suite-sync 每日比对上游构建日期与脚本 sha256")
     out.append("# " + "=" * 74)
     out.append("")
     if aug_notes:
@@ -516,7 +648,7 @@ def render_plugin(name, qx_text, js_files):
         out.append("")
 
     if warns:
-        out.append("# ===== 转换告警（需人工复核）=====")
+        out.append("# ===== 已知限制（部分内容未能启用）=====")
         for w in warns:
             out.append("#   ! " + w)
     return "\n".join(out) + "\n", warns, dict(rules=len(rule_lines), rewrite=len(rw_lines), script=len(sc_lines))

@@ -43,37 +43,37 @@
 
 ### QX 迁移套件（27 个）
 
-由 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 的 QuantumultX snippet 批量转换为 Loon Rewrite/Script v2 语法，来源与许可说明见文末 QX 迁移套件章节。
+参考 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 的去广告脚本制作，去掉各 App 的开屏、信息流、搜索热词与运营弹窗广告；来源与许可说明见文末章节。
 
 | 插件 | 内容 | 一键导入 |
 |---|---|---|
-| **菜鸟裹裹净化** | 2 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FCwkj.lpx) |
-| **滴滴出行净化** | 16 规则 + 24 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FDidichuxing.lpx) |
-| **Keep净化** | 2 规则 + 9 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FKeep.lpx) |
-| **酷安净化** | 1 规则 + 6 重写 + **1 开关**（含开屏） | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FKuAn.lpx) |
-| **美团净化** | 46 规则 + 2 重写 + 8 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FMT.lpx) |
-| **拼多多净化** | 9 规则 + 23 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FPinduoduo.lpx) |
-| **顺丰速运净化** | 4 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FSF.lpx) |
-| **什么值得买净化** | 13 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FSmzdm.lpx) |
-| **Soul净化** | 18 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FSoul.lpx) |
-| **T3出行净化** | 16 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FT3.lpx) |
-| **百度贴吧净化** | 2 规则 + 7 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTB.lpx) |
-| **途虎养车净化** | 7 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTH.lpx) |
-| **TilingSales净化** | 17 重写 + 6 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTilingSales_ad_remove.lpx) |
-| **腾讯视频净化** | 2 规则 + 5 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTxvideoAD.lpx) |
-| **腾讯体育净化** | 7 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Ftxsports-ad-clean.lpx) |
-| **微博净化** | 5 规则 + 25 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FWB.lpx) |
-| **微信净化** | 32 重写 + 2 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FWxPureDominion.lpx) |
-| **YouTube净化** | 5 重写 + 1 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FYoutube.lpx) |
-| **YouTube字幕** | 2 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FYt-zh.lpx) |
-| **哔哩哔哩净化** | 5 重写 + 5 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fbili_view_ad_rewrite.lpx) |
-| **哈啰净化** | 4 重写 + 4 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fhelloobike.lpx) |
-| **黑料网净化** | 13 重写 + 2 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fhlwxx_remove_ads.lpx) |
-| **芒果TV** | 1 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fmgtv_vip.lpx) |
-| **咪咕视频** | 2 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fmigu_vip_share.lpx) |
-| **iTunes净化** | 1 重写 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FxTerm256.lpx) |
-| **小红书净化** | 15 重写 + 2 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fxhey-ad-clean.lpx) |
-| **字幕解锁** | 4 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fxzimu-unlock.lpx) |
+| **菜鸟裹裹净化** | 内嵌游戏中心的等级与 VIP 标识 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FCwkj.lpx) |
+| **滴滴出行净化** | 活动弹窗、信息流与广告追踪域名 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FDidichuxing.lpx) |
+| **Keep净化** | 广告接口与搜索热词 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FKeep.lpx) |
+| **酷安净化** | 开屏、信息流与搜索热搜 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FKuAn.lpx) |
+| **美团净化** | 广告追踪域名与上报地址 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FMT.lpx) |
+| **拼多多净化** | 首页推荐、搜索推广与活动弹窗 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FPinduoduo.lpx) |
+| **顺丰速运净化** | 信息流广告、推荐与积分商城商品 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FSF.lpx) |
+| **什么值得买净化** | 开屏 loading、横幅广告与推荐模块 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FSmzdm.lpx) |
+| **Soul净化** | 广场推荐、聊天引导与开屏运营位 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FSoul.lpx) |
+| **T3出行净化** | 活动弹窗与广告位 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FT3.lpx) |
+| **百度贴吧净化** | 广告域名、搜索发现与直播 feed 推广 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTB.lpx) |
+| **途虎养车净化** | 营销弹窗、横幅、超级会员与搜索热词 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTH.lpx) |
+| **TilingSales净化** | 开屏、浮窗、插屏与横幅广告 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTilingSales_ad_remove.lpx) |
+| **腾讯视频净化** | 广告 SDK 配置编排 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FTxvideoAD.lpx) |
+| **腾讯体育净化** | 开屏、首页广告与底部会员 tab | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Ftxsports-ad-clean.lpx) |
+| **微博净化** | 信息流广告、搜索推广与推送运营 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FWB.lpx) |
+| **微信净化** | 小程序内的营销弹窗与会员推广 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FWxPureDominion.lpx) |
+| **YouTube净化** | 视频广告、首页 Shorts 与内嵌推荐卡 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FYoutube.lpx) |
+| **YouTube字幕** | 字幕接口解锁 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FYt-zh.lpx) |
+| **哔哩哔哩净化** | 开屏、播放器广告、搜索热词与动态推广 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fbili_view_ad_rewrite.lpx) |
+| **哈啰净化** | 开屏素材配置与广告密钥 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fhelloobike.lpx) |
+| **黑料网净化** | 网页浮窗、弹窗广告与统计上报 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fhlwxx_remove_ads.lpx) |
+| **芒果TV** | 会员视频源解锁 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fmgtv_vip.lpx) |
+| **咪咕视频** | 会员播放源解锁 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fmigu_vip_share.lpx) |
+| **iTunes净化** | 内购收据校验拦截 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2FxTerm256.lpx) |
+| **小红书净化** | 开屏、第三方广告 SDK 与竞价请求 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fxhey-ad-clean.lpx) |
+| **字幕解锁** | 字幕任务会员校验解除 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2Fqx%2Fxzimu-unlock.lpx) |
 
 ---
 
@@ -179,9 +179,9 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 ## 📦 QX 迁移套件（plugins/qx/）
 
-把 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 仓库的**全部 QuantumultX snippet** 批量转换为 Loon 插件，共 **27 个**（虎扑因为另有手写增强版 `HP_Clean.lpx`，未重复收录）。
+参考 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx) 的去广告脚本，覆盖 **27 个** App，去除各自的开屏、信息流、搜索热词与运营弹窗广告（虎扑因为另有手写增强版 `HP_Clean.lpx`，未重复收录）。
 
-> 📥 **导入链接见上方 [🚀 全部插件快捷链接](#-全部插件快捷链接)**，本章节只说明转换细节与注意事项。
+> 📥 **导入链接见上方 [🚀 全部插件快捷链接](#-全部插件快捷链接)**，本章节只说明实现细节与注意事项。
 
 转换器：[`scripts/qx2loon.py`](https://github.com/dranklim/loon/blob/main/scripts/qx2loon.py)（通用、可重跑），覆盖 16 种 QX 语法。本地增强规则（如 KuAn 开屏清除）写在其 `PLUGIN_JQ_AUGMENTS` 表里，以**追加**方式叠加在上游 jq 之后。
 
@@ -210,7 +210,7 @@ REJECT 策略内置，一键导入即生效，无需手动选策略。
 
 ### 来源与许可
 
-所有规则与脚本源自 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx)（原作者 `TG@ZenMoFiShi` / `怎么肥事`，以各 snippet 头部 `#!author` 为准）。该仓库**未声明 LICENSE**，版权归原作者；本仓库仅做 QuantumultX → Loon 语法转换并保留署名，原作者有异议即行撤下。
+去广告思路与规则参考 [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx)（原作者 `TG@ZenMoFiShi`、`怎么肥事`、`walala`，以各 snippet 头部 `#!author` 为准）。该仓库**未声明 LICENSE**，版权归原作者；本仓库在其脚本基础上适配 Loon 并保留完整署名，原作者有异议即行撤下。
 
 ---
 

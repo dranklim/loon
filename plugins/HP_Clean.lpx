@@ -1,6 +1,6 @@
 #!name = 虎扑净化
-#!desc = 虎扑 App 去广告：图库入口、未读红点、热门标签/排行榜、搜索热搜、插屏广告、比分Tab横幅、首页轮播、预览横幅、论坛冗余图标、用户页VIP卡片。用 Loon Rewrite v2 语法重写，版本号已通配，App 升级不失效。
-#!author = dranklim
+#!desc = 参考 ZenmoFeiShi 的去广告脚本：图库入口、未读红点、热门标签与排行榜、搜索热搜、插屏广告、比分 Tab 横幅、首页轮播、预览页横幅、论坛冗余入口、用户页 VIP 卡片
+#!author = dranklim, ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/hupu.png
 #!system = iOS,iPadOS
@@ -10,24 +10,29 @@
 #!type = normal
 
 # ============================================================================
+# 本插件去除的内容
+# ----------------------------------------------------------------------------
+#   · 图库聚合页入口（模块置空）
+#   · 未读红点查询
+#   · 社区页热门标签与排行榜
+#   · 搜索框热搜词与联想提示
+#   · 开屏 / 切页插屏广告（goblin 域）
+#   · 比赛页比分 Tab 与位置横幅
+#   · 热门列表顶部轮播
+#   · 预览页横幅
+#   · 论坛冗余入口：个性换肤、专家预测、邀请好友、版主中心、JRs 战术板、
+#     草稿箱、58 同城，以及「我的应用」卡片
+#   · 「我的」页面 VIP 信息卡
+#
 # 来源声明 / Attribution
 # ----------------------------------------------------------------------------
-# 本插件的全部拦截规则源自开源项目 ZenmoFeiShi/Qx 的 HP.snippet（QuantumultX 片段）：
+#   去广告思路与规则参考开源项目 ZenmoFeiShi/Qx 的 HP.snippet：
 #   https://github.com/ZenmoFeiShi/Qx/blob/main/HP.snippet
 #
-#   原作者     : 怎么肥事（HP.snippet 头部 #!author 字段）
+#   原作者     : 怎么肥事（以 snippet 头部 #!author 字段为准）
 #   上游版本   : 2026-04-14（commit f254dd4d，该文件最后一次更新）
-#   上游许可   : 该仓库未声明 LICENSE，版权归原作者所有。本插件仅做
-#                QuantumultX → Loon Rewrite v2 的语法转换与本地增强，
-#                拦截语义与原片段保持一致，并在此保留完整署名。
-#                若原作者对分发有异议，告知后即行撤下。
-#
-#   转换与增强（详见文末「迁移说明」）：
-#     · 语法转换：url reject-200/reject-dict → reject()/reject_dict()
-#                 jsonjq-response-body → response.json.jq()
-#     · 修复上游硬伤：上游两条规则把版本段写死成 /3/8.0.86/，App 一升级即失效，
-#                     本插件改为通配 \d+/[0-9.]+
-#     · 新增 [Argument] 十项独立开关（上游只能整份启用停用）
+#   上游许可   : 该仓库未声明 LICENSE，版权归原作者所有；原作者对分发
+#                有异议，告知后即行撤下。
 #
 # 上游同步机制 / Upstream sync
 # ----------------------------------------------------------------------------
@@ -60,7 +65,7 @@ vipCard = switch,true,tag=用户页VIP,desc=「我的」页面 VIP 信息卡
 # ============================================================================
 # Rewrite v2 规则区
 # 语法: <phase> if <condition> then <action> [| <action> ...]
-# 与原 QuantumultX 片段的差异见文末「迁移说明」
+# 每项功能对应一个开关，失效时可逐项关闭定位
 # ============================================================================
 [Rewrite]
 request if ${gallery} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.com\/gallery\/getmod2/ then reject(200)
@@ -78,29 +83,20 @@ response if ${vipCard} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.
 hostname = *.hupu.com
 
 # ============================================================================
-# 迁移说明（本段是注释，位于所有配置段之外，Loon 不解析）
+# 使用说明（本段是注释，位于所有配置段之外，Loon 不解析）
 #
-# 来源：ZenmoFeiShi/Qx @b03dc05 HP.snippet（QuantumultX，2026-04-14）
+# 一、每项功能可独立开关
+#   上游脚本只能整份启用 / 停用，删多了没法逐项排查。本插件拆成 10 个开关，
+#   关掉某一项 = 对应规则不执行，接口恢复原样。
 #
-# 一、语法升级（QX → Loon Rewrite v2）
-#   url reject-200        → reject(200)
-#   url reject-dict       → reject_dict(200)       返回 JSON {}
-#   jsonjq-response-body  → response.json.jq(`...`) 直接吃 jq 表达式
-#   del(.result.vipInfo)  → response.json.delete("result.vipInfo")  显式 JSON 删除
+# 二、版本号通配，升级不失效
+#   上游有两条规则把版本段写死成 /3/8.0.86/，App 一旦升级（例如 8.1.x）立刻失效
+#   —— 表现为比分 Tab 和位置横幅重新出现。本插件统一改为通配 \d+/[0-9.]+，
+#   其余规则的 \d/\d\.\d\.\d+ 也一并放宽，升到 9.x、10.x 都不用改。
 #
-# 二、修掉原片段的硬伤（两条规则写死版本号）
-#   原 QX 第 6、7 条把版本段写死成 /3/8.0.86/：
-#     ^https://games.mobileapi.hupu.com/3/8.0.86/bplcommentapi/bpl/score_tab/groups
-#     ^https://games.mobileapi.hupu.com/3/8.0.86/bplapi/banner/getLocationBanners
-#   App 一旦升级（例如 8.1.x），这两条立刻失效 —— 比分Tab和位置横幅会重新出现。
-#   本插件统一改为通配：\d+/[0-9.]+ ，同时把其余规则的 \d/\d\.\d\.\d+ 也放宽，
-#   以后升级到 9.x、10.x 都不用改插件。
-#
-# 三、新增能力
-#   · [Argument] 十项独立开关 —— 原片段只能整份启用/停用，删多了没法逐项排查
+# 三、实现上的两个取舍
 #   · 请求阶段用 reject_dict(200) 让 App 拿到合法空 JSON，比 404/空体更不易触发
-#     异常分支（图库那条仍用 reject(200) 空体，与原片段一致，因为它是「模块入口」
-#     置空而非数据接口）
+#     异常分支（图库那条仍用 reject(200) 空体，因为它是「模块入口」置空而非数据接口）
 #   · 响应阶段统一用 response.json.* —— 只在 body 是合法 JSON 时才改写，
 #     接口返回错误页/非 JSON 时自动跳过，不会把响应搞坏
 #

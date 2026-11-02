@@ -1,6 +1,6 @@
 #!name = 哈啰净化
-#!desc = 由 ZenmoFeiShi/Qx 的 helloobike.snippet 转换为 Loon Rewrite/Script v2 语法（0 条规则 + 4 条重写 + 4 条脚本）
-#!author = dranklim（转换）
+#!desc = 参考 ZenmoFeiShi 的去广告脚本：开屏素材配置与广告密钥
+#!author = dranklim, ZenmoFeiShi
 #!homepage = https://github.com/dranklim/loon
 #!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/hellobike.png
 #!system = iOS,iPadOS
@@ -9,13 +9,18 @@
 #!type = normal
 
 # ==========================================================================
+# 本插件去除的内容
+#   · 开屏广告素材配置 JSON（resource.51downapp.cn）
+#   · 广告密钥下发接口（api.hellobike.com/secretkey）
+# ==========================================================================
+
+# ==========================================================================
 # 来源声明 / Attribution
-#   规则与脚本源自开源项目 ZenmoFeiShi/Qx 的 helloobike.snippet
+#   去广告思路与规则参考开源项目 ZenmoFeiShi/Qx 的 helloobike.snippet
 #   https://github.com/ZenmoFeiShi/Qx/blob/main/helloobike.snippet
-#   原作者：TG@ZenMoFiShi / 怎么肥事（以 snippet 头部 #!author 为准）
-#   该仓库未声明 LICENSE，版权归原作者；本插件仅做 QuantumultX → Loon 语法转换，
-#   脚本镜像至本仓库 scripts/qx/ 以便国内直连。原作者有异议即行撤下。
-#   同步：cron 任务 qx-suite-sync 每日比对上游 snippet 与脚本的 sha256
+#   原作者：TG@ZenMoFiShi、怎么肥事、walala（以 snippet 头部 #!author 为准）
+#   上游未声明 LICENSE，版权归原作者所有；原作者有异议即行撤下。
+#   同步：cron 任务 qx-suite-sync 每日比对上游构建日期与脚本 sha256
 # ==========================================================================
 
 # URL 重写（来自 QX url reject-* / jsonjq-response-body）
