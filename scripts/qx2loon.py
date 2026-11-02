@@ -12,7 +12,7 @@ qx2loon.py — 把 ZenmoFeiShi/Qx 仓库下的 QuantumultX snippet 批量转换�
                          失败时保留旧文件）
                        · PLUGIN_JQ_AUGMENTS：上游缺失的增强（KuAn 开屏清除）以**追加**
                          方式拼到上游 jq 末尾。手改生成物 .lpx 会被 --build 整条静默覆盖
-                       · append 与 relax 分开计数。曾共用 hit：relax（api\d* 放宽）在任何
+                       · append 与 relax 分开计数。曾共用 hit：relax（api\\d* 放宽）在任何
                          规则上都能命中，会把 append 失配完全掩盖
                        · append 失配时不再写增强说明注释（注释声称已做开屏清除、实际没做）
                        · verify_plugins()：构建后校验 —— 空插件 / [Mitm] 空 hostname /
