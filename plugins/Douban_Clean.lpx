@@ -1,0 +1,120 @@
+#!name = 豆瓣净化
+#!desc = 去掉豆瓣 App 的开屏广告、首页横幅、帖内与评论区广告，以及混在评论列表里伪装成普通用户的推荐位
+#!author = dranklim,luestr
+#!homepage = https://github.com/dranklim/loon
+#!icon = https://raw.githubusercontent.com/dranklim/loon/main/assets/douban.png
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(978)
+#!date = 2026-11-15
+#!tag = 去广告,豆瓣,净化
+#!type = normal
+
+# ============================================================================
+# 本插件去除的内容
+# ----------------------------------------------------------------------------
+#   · 开屏广告（app_ads/splash_preload、splash_bid、splash_show、
+#     splash_statistics 四个子接口）
+#   · 首页顶部横幅（伪装成「热点精选」一类的推荐位）
+#   · 帖内与评论区的信息流广告（豆瓣自营 + 穿山甲 + 广点通四路 SDK）
+#   · 评论列表里伪装成普通用户的推荐位（ad_type = fake，随评论一起下发）
+#   · 插屏广告与广告预竞价（erebor 域）
+#   · 电影页广告、商城推广位、搜索框填充词
+#
+# 来源声明 / Attribution
+# ----------------------------------------------------------------------------
+#   规则思路参考开源项目 luestr/ProxyResource 的豆瓣去广告规则：
+#   https://github.com/luestr/ProxyResource
+#
+#   原作者     : luestr（可莉）
+#   参考版本   : 2026-10-02
+#   上游许可   : 该仓库未声明 LICENSE，版权归原作者所有；原作者对分发
+#                有异议，告知后即行撤下。
+#
+#   本插件在其基础上补充了三处上游未覆盖的广告通道（见下方说明），
+#   并把请求级 reject 改为响应级改写，避免广告位残留空白占位。
+# ============================================================================
+
+# ============================================================================
+# 参数：每项功能可独立开关（[Argument] 需 Build 733+，Loon 界面自动生成开关）
+# 关掉某一项 = 对应规则不执行，接口恢复原样，方便逐项排查「删多了」
+# ============================================================================
+[Argument]
+splash = switch,true,tag=开屏广告,desc=app_ads/splash 四个子接口（preload/bid/show/statistics）
+feedAd = switch,true,tag=帖内与评论区广告,desc=erebor/feed_ad 的自营与 SDK 广告数据
+fakeComment = switch,true,tag=伪评论推荐位,desc=评论列表里 ad_type=fake 的插入项
+homeBanner = switch,true,tag=首页横幅,desc=home_banner 顶部推荐位
+interstitial = switch,true,tag=插屏广告,desc=erebor/interstitial
+bid = switch,true,tag=广告预竞价,desc=erebor/frodo_bid
+otherAds = switch,true,tag=其他推广位,desc=电影页广告、商城推广、搜索填充词、首页 home_ads
+
+# ============================================================================
+# Rewrite v2 规则区
+# 语法: <phase> if <condition> then <action> [| <action> ...]
+# 每项功能对应一个开关，失效时可逐项关闭定位
+# ============================================================================
+[Rewrite]
+# —— 开屏：四个子接口都以 splash 开头，一条正则全覆盖 ——
+request if ${splash} == true && ${url} ~= /^https:\/\/api\.douban\.com\/v\d\/app_ads\/splash/ then reject_dict(200)
+
+# —— 帖内 / 评论区信息流广告：清空广告数据，保留 blocked_cids 等其余字段 ——
+response if ${feedAd} == true && ${url} ~= /^https:\/\/frodo\.douban\.com\/api\/v\d\/erebor\/feed_ad/ then response.json.jq(`.ad_info = null | .sdk_ads = []`)
+
+# —— 伪评论：评论随列表下发，不走 feed_ad，必须从数组里剔掉带 ad_info 的项 ——
+response if ${fakeComment} == true && ${url} ~= /^https:\/\/frodo\.douban\.com\/api\/v\d\/group\/topic\/\d+\/comments/ then response.json.jq(`if has("comments") then .comments |= map(select(has("ad_info") | not)) else . end | if has("popular_comments") then .popular_comments |= map(select(has("ad_info") | not)) else . end`)
+
+# —— 首页横幅 ——
+request if ${homeBanner} == true && ${url} ~= /^https:\/\/frodo\.douban\.com\/api\/v\d\/home_banner/ then reject_dict(200)
+
+# —— 插屏与预竞价（erebor 域）——
+request if ${interstitial} == true && ${url} ~= /^https:\/\/erebor\.douban\.com\/interstitial\// then reject_dict(200)
+request if ${bid} == true && ${url} ~= /^https:\/\/erebor\.douban\.com\/frodo_bid\// then reject_dict(200)
+
+# —— 其他推广位 ——
+request if ${otherAds} == true && ${url} ~= /^https:\/\/frodo\.douban\.com\/api\/v\d\/(movie\/ad|home_ads)/ then reject_dict(200)
+request if ${otherAds} == true && ${url} ~= /^https:\/\/m\.douban\.com\/rexxar\/api\/v\d\/market\/products\// then reject_dict(200)
+request if ${otherAds} == true && ${url} ~= /^https:\/\/frodo\.douban\.com\/api\/v\d\/search\/found_words/ then reject_dict(200)
+
+[Mitm]
+hostname = api.douban.com, frodo.douban.com, erebor.douban.com, m.douban.com
+
+# ============================================================================
+# 使用说明（本段是注释，位于所有配置段之外，Loon 不解析）
+#
+# 一、三处上游未覆盖的广告通道
+#   抓包实测（234 请求 / 41 秒）发现除 feed_ad 之外还有三条独立链路：
+#   · erebor.douban.com/interstitial/  插屏，上游 MITM 里连这个域都没有
+#   · erebor.douban.com/frodo_bid/     预竞价，按广告位预先拉取候选
+#   · group/topic/<id>/comments        伪评论广告直接混在评论数组里，
+#                                      ad_type 字段值为 fake，ad_index 标明插入位置。
+#                                      它不经过 feed_ad，拦截 feed_ad 对它无效。
+#
+# 二、为什么用响应改写而不是 reject
+#   上游对 feed_ad 用 request reject_dict(200)，App 拿到的是空对象。
+#   本插件改为响应级 .ad_info = null | .sdk_ads = []：保留响应骨架与
+#   blocked_cids，布局更干净，也不易触发「缺字段」的兜底渲染。
+#   若你的版本出现空白占位，把 feedAd 那条的 response 改回 request reject_dict(200)。
+#
+# 三、广告位与 SDK 构成（便于日后失效时定位）
+#   dale_group_topic_ad          帖内，一次下发约 27 条 sdk_ads
+#   dale_group_topic_comments_feed  评论区，约 4 条 sdk_ads
+#   SDK 来源：pangolinSDK / pangolinExpressSDK（穿山甲 app_id 5003518）
+#            gdtSDK / gdtExpressSDK（广点通 app_id 1106295950）
+#   若某天广告重现，先抓包看 unit_name 是否换名、接口路径是否加版本号。
+#
+# 四、未纳入的第三方联盟（默认不启用，避免误伤）
+#   抓包里还看到这些联盟的请求，但都不承载豆瓣自身的展示位，
+#   且部分与登录链路相邻。如需彻底清理，在 [Rule] 段自行添加：
+#     IP-CIDR 或 DOMAIN 形式的 REJECT，指向
+#     knicks.jd.com / dg.k.jd.com / mapi.m.jd.com     京东联盟
+#     integralwall.baidu.com                          百度积分墙
+#     youku-dsp.youku.com                             优酷 DSP 跟踪
+#     beacon-ad.ztgame.com                            中手游广告统计
+#     mssdk.volces.com                                火山引擎上报
+#   ⚠️ 不要拦 acs.m.taobao.com 与 dypnsapi-dualstack.aliyuncs.com，
+#      那是阿里 mtop 网关和号码认证，拦了会导致登录异常。
+#
+# 五、使用前提
+#   1. 必须开启 MitM 并在 Loon 内安装、信任证书，否则 HTTPS 无法解密
+#   2. 若某项无效，先在插件参数里单独关掉其他项排查
+#   3. 接口路径随 App 版本会变，失效时抓包更新对应正则即可，不必改结构
+# ============================================================================
