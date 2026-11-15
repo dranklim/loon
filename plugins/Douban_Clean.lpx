@@ -39,7 +39,8 @@
 # 关掉某一项 = 对应规则不执行，接口恢复原样，方便逐项排查「删多了」
 # ============================================================================
 [Argument]
-splash = switch,true,tag=开屏广告,desc=app_ads/splash 四个子接口（preload/bid/show/statistics）
+splashData = switch,true,tag=开屏接口数据,desc=清空 splash 预加载/竞价/展示的广告数据（含备用与预加载广告）
+splashAsset = switch,true,tag=开屏素材,desc=拦截广告图片与视频 CDN（快手联盟 adukwai 域 + 豆瓣 dale_ad 图片）
 feedAd = switch,true,tag=帖内与评论区广告,desc=erebor/feed_ad 的自营与 SDK 广告数据
 fakeComment = switch,true,tag=伪评论推荐位,desc=评论列表里 ad_type=fake 的插入项
 homeBanner = switch,true,tag=首页横幅,desc=home_banner 顶部推荐位
@@ -53,8 +54,12 @@ otherAds = switch,true,tag=其他推广位,desc=电影页广告、商城推广�
 # 每项功能对应一个开关，失效时可逐项关闭定位
 # ============================================================================
 [Rewrite]
-# —— 开屏：四个子接口都以 splash 开头，一条正则全覆盖 ——
-request if ${splash} == true && ${url} ~= /^https:\/\/api\.douban\.com\/v\d\/app_ads\/splash/ then reject_dict(200)
+# —— 开屏：预加载 / 竞价 / 展示三处分别清空，连备用与预加载广告一起清 ——
+# reject_dict(200) 返回空对象时 App 会走兜底分支复用缓存，必须保留响应骨架只清数据
+response if ${splashData} == true && ${url} ~= /^https:\/\/api\.douban\.com\/v\d\/app_ads\/splash_preload/ then response.json.jq(`.ads = [] | .preload_ids = null | .preload_uniq_ids = []`)
+response if ${splashData} == true && ${url} ~= /^https:\/\/api\.douban\.com\/v\d\/app_ads\/splash_bid/ then response.json.jq(`.sdk_win = 0 | .sdk_id = null | .sdk_ad_info = null`)
+response if ${splashData} == true && ${url} ~= /^https:\/\/api\.douban\.com\/v\d\/app_ads\/splash_show/ then response.json.jq(`.ad_info = null | .backup_ad_info = null | .preload_ad_info = null | .preload_ad_id = null | .backup_ad_id = null | .ad_bid_info = null | .sdk_info = null`)
+request if ${splashData} == true && ${url} ~= /^https:\/\/api\.douban\.com\/v\d\/app_ads\/splash_statistics/ then reject_dict(200)
 
 # —— 帖内 / 评论区信息流广告：清空广告数据，保留 blocked_cids 等其余字段 ——
 response if ${feedAd} == true && ${url} ~= /^https:\/\/frodo\.douban\.com\/api\/v\d\/erebor\/feed_ad/ then response.json.jq(`.ad_info = null | .sdk_ads = []`)
@@ -74,8 +79,19 @@ request if ${otherAds} == true && ${url} ~= /^https:\/\/frodo\.douban\.com\/api\
 request if ${otherAds} == true && ${url} ~= /^https:\/\/m\.douban\.com\/rexxar\/api\/v\d\/market\/products\// then reject_dict(200)
 request if ${otherAds} == true && ${url} ~= /^https:\/\/frodo\.douban\.com\/api\/v\d\/search\/found_words/ then reject_dict(200)
 
+# —— 开屏素材图片（豆瓣自营，需 MitM img 域；正常图片在 /view/photo/、/icon/，广告图在 /dale_ad/）——
+request if ${splashAsset} == true && ${url} ~= /^https:\/\/img\d*\.doubanio\.com\/view\/dale-online\/dale_ad\// then reject(200)
+
+[Rule]
+# ============================================================================
+# 开屏素材 CDN —— 域名层直接拒绝，不依赖 MitM 解密
+# 快手联盟把开屏素材放在 adukwai.com（splash_show 的 ad_content_url 指向这里）。
+# 该域仅用于广告素材分发，不影响豆瓣本身与快手 App（快手主域是 kuaishou.com，未拦）。
+# ============================================================================
+DOMAIN-SUFFIX,adukwai.com,REJECT
+
 [Mitm]
-hostname = api.douban.com, frodo.douban.com, erebor.douban.com, m.douban.com
+hostname = api.douban.com, frodo.douban.com, erebor.douban.com, m.douban.com, img*.doubanio.com
 
 # ============================================================================
 # 使用说明（本段是注释，位于所有配置段之外，Loon 不解析）

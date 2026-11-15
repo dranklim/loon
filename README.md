@@ -38,7 +38,7 @@
 | **Civitai去广告** | 9 规则 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FCivitai_remove_ads.lpx) |
 | **懂球帝去广告** | 15 规则 + 1 脚本 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FDongqiudi_remove_ads.lpx) |
 | **虎扑净化** | 10 重写 + **10 开关** | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FHP_Clean.lpx) |
-| **豆瓣净化** | 9 重写 + **7 开关**，含伪评论推荐位 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FDouban_Clean.lpx) |
+| **豆瓣净化** | 13 重写 + **8 开关**，含伪评论推荐位与开屏素材拦截 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FDouban_Clean.lpx) |
 | **风控上报 IP 拦截 (IP Rewrite)** | 1 条 IP Rewrite | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FRiskBlock_IPRewrite.lpx) |
 | **SkipProxy防检测** | 11 规则 | [⬇️ 导入](https://www.nsloon.com/openloon/import?plugin=https%3A%2F%2Fraw.githubusercontent.com%2Fdranklim%2Floon%2Fmain%2Fplugins%2FSkipProxy_anti_detect.lpx) |
 
