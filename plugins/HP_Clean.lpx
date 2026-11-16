@@ -57,8 +57,8 @@ gallery = switch,true,tag=图库模块,desc=图库聚合页置空（返回 200 �
 reddot = switch,true,tag=未读红点,desc=屏蔽红点查询接口
 hotTag = switch,true,tag=热门标签与排行榜,desc=社区页热门标签、排行榜
 searchHot = switch,true,tag=搜索热搜,desc=搜索框热搜词与联想提示
-interstitial = switch,true,tag=广告位拦截,desc=开屏/插屏/评论区等全部广告位（goblin 域，游戏奖励位除外）
-gameAd = switch,false,tag=游戏奖励广告,desc=游戏内看广告领奖励位（pid=16904）。默认关：该流程必须有广告才能领奖励，开启会提示「获取广告失败」
+interstitial = switch,true,tag=广告位拦截,desc=开屏/插屏/评论区等全部广告位（goblin 域）
+gameAd = switch,false,tag=游戏奖励广告,desc=放行游戏奖励位 pid=16904。开启后领奖励会提示「获取广告失败」，且评论区若共用该 pid 会一起放行
 scoreTab = switch,true,tag=比分Tab与位置横幅,desc=比赛页比分Tab、banner/getLocationBanners
 hotBanner = switch,true,tag=首页顶部轮播,desc=热门列表 hotList 的 topBanner
 previewBanner = switch,true,tag=预览页横幅,desc=预览接口的 data 置 null
@@ -75,14 +75,17 @@ request if ${gallery} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.c
 request if ${reddot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bplapi\/reddot\/v1\/app\/getReddot/ then reject_dict(200)
 request if ${hotTag} == true && ${url} ~= /^https:\/\/bbs\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bbsallapi\/tag\/v1\/heatTag|bbsrankapi\/v1\/rating\/list)/ then reject_dict(200)
 request if ${searchHot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/search\/v2\/(hintkeylist|hotkeylist)/ then reject_dict(200)
-# 插屏/评论区等所有广告位：除 pid=16904（游戏奖励位）外一律拦
-# 负向断言 (?!.*pid=16904) 保证只放行游戏位，其余 pid 和 batch 路径全部拦下
-request if ${interstitial} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+|batch)(?!.*pid=16904(&|$))/ then reject_dict(200)
-# 游戏内「看广告领奖励」位（pid=16904，placement_type_CN=激励视频）
-# 该流程要求 ads 必须有内容才能继续，清空后 App 直接提示「获取广告失败」——
-# 实测 mock 与 jq 两种写法均无效，无解。因此开关默认关闭（放行，广告正常播、奖励可领）。
-# 打开则：放行请求 + 改写响应，ad_code 置 0、ads 清空（会报获取广告失败，仅适合不要奖励的场景）
-response if ${gameAd} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/v\d+.*[?&]pid=16904(&|$)/ then response.json.jq(`.ad_code = 0 | .ads = []`)
+# 开屏/插屏/评论区等所有广告位：默认一律拦（getOther 全部 pid + batch）
+# 注：pid 不是可靠的场景标识——区分场景的 position / spm 只存在于 POST body，
+# Loon 只能匹配 URL/header，匹配不到 body。若评论区与游戏奖励位共用 pid=16904，
+# 任何"按 pid 放行"的写法都会把评论区广告一起放出来。
+request if ${interstitial} == true && ${gameAd} == false && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+|batch)/ then reject_dict(200)
+# gameAd 打开时：只拦非 16904，把 16904 留给下面的改写规则
+request if ${interstitial} == true && ${gameAd} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+|batch)(?!.*pid=16904(&|$))/ then reject_dict(200)
+# 游戏奖励位（pid=16904）：gameAd 打开时放行请求并改写响应
+# 该流程要求 ads 必须有内容才能继续，清空后 App 提示「获取广告失败」——mock/jq 实测均无效，
+# 故 gameAd 默认关闭。开启后游戏不报错但领不到奖励，且评论区若共用该 pid 会一起放行。
+response if ${gameAd} == true && ${interstitial} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/v\d+.*[?&]pid=16904(&|$)/ then response.json.jq(`.ad_code = 0 | .ads = []`)
 request if ${scoreTab} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bplcommentapi\/bpl\/score_tab\/groups|bplapi\/banner\/getLocationBanners)/ then reject_dict(200)
 response if ${previewBanner} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.com\/mang\/preview\/banners/ then response.json.jq(`.data = null`)
 response if ${hotBanner} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/buffer\/hotList/ then response.json.delete("result.topBanner")
