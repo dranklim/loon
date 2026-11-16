@@ -75,14 +75,14 @@ request if ${gallery} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.c
 request if ${reddot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bplapi\/reddot\/v1\/app\/getReddot/ then reject_dict(200)
 request if ${hotTag} == true && ${url} ~= /^https:\/\/bbs\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bbsallapi\/tag\/v1\/heatTag|bbsrankapi\/v1\/rating\/list)/ then reject_dict(200)
 request if ${searchHot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/search\/v2\/(hintkeylist|hotkeylist)/ then reject_dict(200)
-# 插屏：开屏/切页位（pid=999，ad_page_id=boot）。同样用 mock 而非 reject：
-# 返回与真实格式一致的「无填充」响应，开屏直接放行进首页，不会因空对象报错。
-response if ${interstitial} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+.*[?&]pid=999(&|$)|batch)/ then response.body.mock("json", `{"request_id":"","ad_code":0,"ads":[]}`, 200)
-# 游戏内「看广告领奖励」位（pid=16904，placement_type_CN=激励视频）：
-# 真实响应结构为 {"request_id":"...","ad_code":1,"ads":[...]}，ad_code=1 表示有填充。
-# 不能直接 reject —— 返回 {} 会被 App 判为接口异常并弹「获取广告失败」。
-# 改为 mock 一份「无填充」的合法响应：ad_code=0 + ads 为空，接口正常返回、没有广告可播。
-response if ${gameAd} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/v\d+.*[?&]pid=16904(&|$)/ then response.body.mock("json", `{"request_id":"","ad_code":0,"ads":[]}`, 200)
+# 插屏：开屏/切页位（pid=999，ad_page_id=boot）
+# 不用 mock —— 响应里的 extra 是服务端签名，mock 无法伪造，App 校验不通过会报错。
+# 改为放行请求、只改写响应：保留服务器生成的 request_id / extra / stage_timestamp_map，
+# 仅把 ad_code 置 0、ads 清空，让 App 认为「无广告填充」而不是「接口异常」。
+response if ${interstitial} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+.*[?&]pid=999(&|$)|batch)/ then response.json.jq(`.ad_code = 0 | .ads = []`)
+# 游戏内「看广告领奖励」位（pid=16904，placement_type_CN=激励视频）
+# 同样改为放行 + 响应改写：ad_code=1 表示有填充，置 0 并清空 ads，保留服务端签名等全部原字段
+response if ${gameAd} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/v\d+.*[?&]pid=16904(&|$)/ then response.json.jq(`.ad_code = 0 | .ads = []`)
 request if ${scoreTab} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bplcommentapi\/bpl\/score_tab\/groups|bplapi\/banner\/getLocationBanners)/ then reject_dict(200)
 response if ${previewBanner} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.com\/mang\/preview\/banners/ then response.json.jq(`.data = null`)
 response if ${hotBanner} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/buffer\/hotList/ then response.json.delete("result.topBanner")
