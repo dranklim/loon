@@ -16,7 +16,9 @@
 #   · 未读红点查询
 #   · 社区页热门标签与排行榜
 #   · 搜索框热搜词与联想提示
-#   · 开屏 / 切页插屏广告（goblin 域）
+#   · 开屏 / 切页插屏广告（goblin 域 pid=999）
+#   · 游戏内「看广告领奖励」的广告位（goblin 域 pid=16904）——以 mock 合法空
+#     响应替代，不再返回空对象，App 不会弹「获取广告失败」
 #   · 比赛页比分 Tab 与位置横幅
 #   · 热门列表顶部轮播
 #   · 预览页横幅
@@ -55,7 +57,8 @@ gallery = switch,true,tag=图库模块,desc=图库聚合页置空（返回 200 �
 reddot = switch,true,tag=未读红点,desc=屏蔽红点查询接口
 hotTag = switch,true,tag=热门标签与排行榜,desc=社区页热门标签、排行榜
 searchHot = switch,true,tag=搜索热搜,desc=搜索框热搜词与联想提示
-interstitial = switch,true,tag=插屏广告,desc=开屏/切页插屏（goblin 域）
+interstitial = switch,true,tag=插屏广告,desc=开屏/切页插屏（goblin 域 pid=999）
+gameAd = switch,true,tag=游戏奖励广告,desc=游戏内看广告领奖励位（pid=16904），返回合法空响应而非报错
 scoreTab = switch,true,tag=比分Tab与位置横幅,desc=比赛页比分Tab、banner/getLocationBanners
 hotBanner = switch,true,tag=首页顶部轮播,desc=热门列表 hotList 的 topBanner
 previewBanner = switch,true,tag=预览页横幅,desc=预览接口的 data 置 null
@@ -72,7 +75,14 @@ request if ${gallery} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.c
 request if ${reddot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/bplapi\/reddot\/v1\/app\/getReddot/ then reject_dict(200)
 request if ${hotTag} == true && ${url} ~= /^https:\/\/bbs\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bbsallapi\/tag\/v1\/heatTag|bbsrankapi\/v1\/rating\/list)/ then reject_dict(200)
 request if ${searchHot} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/search\/v2\/(hintkeylist|hotkeylist)/ then reject_dict(200)
-request if ${interstitial} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+|batch)/ then reject_dict(200)
+# 插屏：开屏/切页位（pid=999，ad_page_id=boot）。同样用 mock 而非 reject：
+# 返回与真实格式一致的「无填充」响应，开屏直接放行进首页，不会因空对象报错。
+response if ${interstitial} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/(v\d+.*[?&]pid=999(&|$)|batch)/ then response.body.mock("json", `{"request_id":"","ad_code":0,"ads":[]}`, 200)
+# 游戏内「看广告领奖励」位（pid=16904，placement_type_CN=激励视频）：
+# 真实响应结构为 {"request_id":"...","ad_code":1,"ads":[...]}，ad_code=1 表示有填充。
+# 不能直接 reject —— 返回 {} 会被 App 判为接口异常并弹「获取广告失败」。
+# 改为 mock 一份「无填充」的合法响应：ad_code=0 + ads 为空，接口正常返回、没有广告可播。
+response if ${gameAd} == true && ${url} ~= /^https:\/\/goblin\.hupu\.com\/\d+\/[0-9.]+\/interfaceAd\/getOther\/v\d+.*[?&]pid=16904(&|$)/ then response.body.mock("json", `{"request_id":"","ad_code":0,"ads":[]}`, 200)
 request if ${scoreTab} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/(bplcommentapi\/bpl\/score_tab\/groups|bplapi\/banner\/getLocationBanners)/ then reject_dict(200)
 response if ${previewBanner} == true && ${url} ~= /^https:\/\/fairy\.mobileapi\.hupu\.com\/mang\/preview\/banners/ then response.json.jq(`.data = null`)
 response if ${hotBanner} == true && ${url} ~= /^https:\/\/games\.mobileapi\.hupu\.com\/\d+\/[0-9.]+\/buffer\/hotList/ then response.json.delete("result.topBanner")
