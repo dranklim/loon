@@ -1,0 +1,29 @@
+# Meta Muse AI Agent 分流规则（Loon 远程规则订阅）
+#
+# 来源：
+#   dev.meta.ai 官方文档提取 —— api.meta.ai / dev.meta.ai 为 Meta Model API 调用域名
+#   ai.meta.com 为 Muse 产品页，auth.meta.com 为 Meta 账号登录入口
+#
+# 用法（二选一）：
+#   1. Loon → 配置 → 规则 → 添加远程规则，填下面的 URL，策略选择你的代理组
+#   2. 配置文本里写：
+#      [Remote Rule]
+#      https://raw.githubusercontent.com/dranklim/loon/main/rules/meta_muse.list, policy=PROXY, tag=Muse, enabled=true
+#
+# 说明：本文件每行自带 PROXY（Loon 内置策略）。若要走自己的策略组，
+#       把 PROXY 换成组名，或删掉行尾策略、在引用时用 policy= 指定。
+
+# ===== Muse / Meta Model API =====
+# meta.ai 一条即可覆盖 api / dev / www 等全部子域
+DOMAIN-SUFFIX,meta.ai,PROXY
+
+# ===== Muse 站点与账号 =====
+DOMAIN-SUFFIX,ai.meta.com,PROXY
+DOMAIN-SUFFIX,muse.meta.com,PROXY
+DOMAIN-SUFFIX,auth.meta.com,PROXY
+
+# ===== Meta CDN（Muse 加载图片/资源用）=====
+# 注意：这两个是 Meta 全家共用的 CDN，会让 Instagram / Facebook 的图片也走代理。
+# 只想代理 Muse 的话把这两行注释掉；发现 Muse 图片加载不出来再加回来。
+DOMAIN-SUFFIX,fbcdn.net,PROXY
+DOMAIN-SUFFIX,cdninstagram.com,PROXY
